@@ -1,5 +1,10 @@
+import Map from "components/Map";
 function App() {
-  return <>시작</>;
+  return (
+    <>
+      <Map />
+    </>
+  );
 }
 
 export default App;
