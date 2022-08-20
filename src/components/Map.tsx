@@ -8,13 +8,16 @@ const Map = () => {
   const [retrievingLocation, setRetrievingLocation] = useState(false);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLocation([
-        { y: position.coords.latitude, x: position.coords.longitude },
-      ]);
+    if (!retrievingLocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log("geolocation 가동");
+        setLocation([
+          { y: position.coords.latitude, x: position.coords.longitude },
+        ]);
 
-      setRetrievingLocation(true);
-    });
+        setRetrievingLocation(true);
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -48,9 +51,11 @@ const Map = () => {
   };
 
   const locationName = useRef<Array<string>>([]);
+  const [keywordSearch, setKeywordSearch] = useState(false);
 
   const searchPlace = (e: React.MouseEvent) => {
     let geocoder = new kakao.maps.services.Geocoder();
+
     let places = new kakao.maps.services.Places();
 
     interface resultType {
@@ -61,8 +66,6 @@ const Map = () => {
 
     let callback = function (result: Array<resultType>, status: string) {
       if (status === kakao.maps.services.Status.OK) {
-        console.log(result);
-        console.log(status);
         locationName.current = result.map(
           (obj: resultType) => obj.address_name
         );
@@ -72,10 +75,13 @@ const Map = () => {
             return { y: obj.y, x: obj.x };
           })
         );
+      } else {
+        // 주소 검색이 안되면 키워드 검색 시작
+        places.keywordSearch(searchingWord, callback); // 키워드 검색 (2순위)
       }
     };
-    geocoder.addressSearch(searchingWord, callback);
-    places.keywordSearch(searchingWord, callback);
+
+    geocoder.addressSearch(searchingWord, callback); // 주소 검색 (1순위)
   };
 
   const clickLocation = (idx: number) => {
