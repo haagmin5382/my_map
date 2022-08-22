@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
+import PlaceButton from "./PlaceButton";
+import SearchBar from "./SearchBar";
 
 const Map = () => {
   const { kakao }: any = window;
@@ -10,7 +12,6 @@ const Map = () => {
   useEffect(() => {
     if (!retrievingLocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log("geolocation 가동");
         setLocation([
           { y: position.coords.latitude, x: position.coords.longitude },
         ]);
@@ -51,7 +52,6 @@ const Map = () => {
   };
 
   const locationName = useRef<Array<string>>([]);
-  const [keywordSearch, setKeywordSearch] = useState(false);
 
   const searchPlace = (e: React.MouseEvent) => {
     let geocoder = new kakao.maps.services.Geocoder();
@@ -104,17 +104,19 @@ const Map = () => {
 
   return (
     <main>
-      <div id="map" style={{ width: "100vw", height: "80vh" }}></div>
+      {retrievingLocation && (
+        <div id="map" style={{ position: "static", height: "100vh" }}></div>
+      )}
+
       <div>
-        <input onChange={changeSearchingWord} />
-        <button onClick={searchPlace}>검색</button>
+        <SearchBar />
       </div>
       <div>
         {locationName.current.map((el, idx) => {
           return (
-            <button key={idx} onClick={() => clickLocation(idx)}>
-              {el}
-            </button>
+            <div key={idx} onClick={() => clickLocation(idx)}>
+              <PlaceButton place={el} />
+            </div>
           );
         })}
       </div>
