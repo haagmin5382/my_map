@@ -2,8 +2,9 @@ import React from "react";
 import Map from "components/Map";
 import styled from "styled-components";
 import Menu from "./Menu";
-import { useDispatch, useSelector } from "react-redux";
-interface reduxStateType {
+import { useSelector } from "react-redux";
+
+export interface reduxStateType {
   modal: {
     value: {
       menuModal: boolean;
@@ -11,7 +12,7 @@ interface reduxStateType {
   };
 }
 
-interface ModalProps {
+export interface ModalProps {
   modalState: boolean;
 }
 

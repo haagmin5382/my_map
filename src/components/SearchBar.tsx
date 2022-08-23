@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { reduxStateType } from "./Main";
 
 const SearchBarContainer = styled.div`
-  position: absoulte;
-  top: 0;
-  left: 0;
+  position: relative;
+  top: -98vh;
+
   text-align: center;
+  z-index: 999;
   > input {
     width: 200px;
     padding: 10px;
@@ -18,7 +21,8 @@ const SearchBarContainer = styled.div`
     font-size: 20px;
 
     border: none;
-    background-color: #ffffff;
+    background: none;
+    color: gray;
     cursor: pointer;
   }
 `;
@@ -28,11 +32,15 @@ interface searchBarProps {
   searchPlace: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const SearchBar = () => {
+const SearchBar = ({ changeSearchingWord, searchPlace }: searchBarProps) => {
+  const modalState = useSelector(
+    (state: reduxStateType) => state.modal.value.menuModal
+  );
+
   return (
     <SearchBarContainer>
-      <input placeholder="장소 검색" />
-      <button>
+      <input placeholder="장소 검색" onChange={changeSearchingWord} />
+      <button onClick={searchPlace}>
         <BsSearch />
       </button>
     </SearchBarContainer>

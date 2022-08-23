@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const searchSlice = createSlice({
-  name: "modal",
-  initialState: { value: { menuModal: false } },
+  name: "search",
+  initialState: { value: { location: [] } },
   reducers: {
-    openAndClose: (state, action) => {
+    search: (state, action) => {
       state.value = action.payload;
     },
   },
@@ -14,5 +14,5 @@ export const searchSlice = createSlice({
 // initialState => 데이터의 초기값
 // reducers => 상태가 변하면 어떻게 실행되는지 정한다.
 
-export const { openAndClose } = searchSlice.actions;
+export const { search } = searchSlice.actions;
 export default searchSlice.reducer;
