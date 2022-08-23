@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import PlaceButton from "./PlaceButton";
 import SearchBar from "./SearchBar";
-
+import Location from "./Location";
 const Map = () => {
   const { kakao }: any = window;
   // window 객체로부터 스크립트에서 로드한 kakao api를 가져와야 하기 때문에 리액트 컴포넌트 상단에 작성
@@ -107,21 +105,12 @@ const Map = () => {
       {retrievingLocation && (
         <div id="map" style={{ position: "static", height: "100vh" }}></div>
       )}
+      <SearchBar
+        changeSearchingWord={changeSearchingWord}
+        searchPlace={searchPlace}
+      />
 
-      <div>
-        <SearchBar />
-      </div>
-      <div>
-        {locationName.current.map((el, idx) => {
-          return (
-            <div key={idx} onClick={() => clickLocation(idx)}>
-              <PlaceButton place={el} />
-            </div>
-          );
-        })}
-      </div>
-
-      {!retrievingLocation && <LoadingSpinner />}
+      <Location locationName={locationName} clickLocation={clickLocation} />
     </main>
   );
 };
