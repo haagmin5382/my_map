@@ -8,27 +8,30 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   interface reduxStateType {
     modal: {
       value: {
         menuModal: boolean;
+        loginModal: boolean;
       };
     };
   }
   const dispatch = useDispatch();
-  const modalState = useSelector(
-    (state: reduxStateType) => state.modal.value.menuModal
-  );
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
 
-  const controlModal = () => {
-    dispatch(openAndClose({ menuModal: !modalState }));
+  const controlModal = (modalName: keyof typeof modalState) => {
+    dispatch(
+      openAndClose({ ...modalState, [modalName]: !modalState[modalName] })
+    );
   };
+
   return (
     <header>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" sx={{ height: "8vh" }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -36,14 +39,23 @@ const Header = () => {
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
-              onClick={controlModal}
+              onClick={() => controlModal("menuModal")}
             >
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              My Map
+              <Link to="/" style={{ textDecoration: "none", color: "#ffffff" }}>
+                My Map
+              </Link>
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "#ffffff" }}
+              >
+                Login
+              </Link>
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
