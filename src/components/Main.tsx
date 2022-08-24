@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Map from "components/Map";
 import styled from "styled-components";
-import Menu from "./Menu";
-import { useSelector } from "react-redux";
 
 export interface reduxStateType {
   modal: {
@@ -16,20 +14,21 @@ export interface ModalProps {
   modalState: boolean;
 }
 
-const FlexContainer = styled.div<ModalProps>`
+export const FlexContainer = styled.div<ModalProps>`
   display: grid;
   grid-template-columns: ${(props) => (props.modalState ? "20% 80%" : "1fr")};
 `;
 const Main = () => {
-  const modalState = useSelector(
-    (state: reduxStateType) => state.modal.value.menuModal
-  );
-
+  const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
+  const locationName = useRef<Array<string>>([]);
   return (
-    <FlexContainer modalState={modalState}>
-      {modalState && <Menu />}
-      <Map />
-    </FlexContainer>
+    <div>
+      <Map
+        setLocation={setLocation}
+        location={location}
+        locationName={locationName}
+      />
+    </div>
   );
 };
 

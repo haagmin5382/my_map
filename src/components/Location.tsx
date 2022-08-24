@@ -4,12 +4,11 @@ import styled from "styled-components";
 
 const LocationContainer = styled.div`
   height: 100vh;
-  overflow: scroll;
-
+  width: 20vw;
+  overflow: auto;
+  overflow-x: hidden;
   position: absolute;
   z-index: 999;
-  top: 9vh;
-  right: 0vw;
 `;
 
 interface LocationProps {

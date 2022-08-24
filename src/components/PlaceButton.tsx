@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const PlaceContainer = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  /* max-width: 200px; */
+
   padding: 1vw;
   text-align: center;
-  background-color: #ffffff;
-  border: 1px solid black;
-  border-radius: 20px;
+  border-bottom: 1px solid black;
+
+  /* border-radius: 20px; */
   margin: 0.5vw;
   color: black;
 

@@ -1,10 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import Location from "./Location";
-const Map = () => {
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { reduxStateType } from "./Main";
+import Menu from "./Menu";
+import { FlexContainer } from "./Main";
+export interface locationInfo {
+  y: number;
+  x: number;
+}
+
+export interface mapProps {
+  location: Array<locationInfo>;
+  setLocation: (value: Array<locationInfo>) => void;
+  locationName: {
+    current: Array<string>;
+  };
+}
+const Map = ({ setLocation, location, locationName }: mapProps) => {
   const { kakao }: any = window;
   // window 객체로부터 스크립트에서 로드한 kakao api를 가져와야 하기 때문에 리액트 컴포넌트 상단에 작성
-  const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
+  // const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
   const [retrievingLocation, setRetrievingLocation] = useState(false);
 
   useEffect(() => {
@@ -44,44 +61,6 @@ const Map = () => {
     }
   }, [location]);
 
-  const [searchingWord, setSearchingWord] = useState("");
-  const changeSearchingWord = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchingWord(e.target.value);
-  };
-
-  const locationName = useRef<Array<string>>([]);
-
-  const searchPlace = (e: React.MouseEvent) => {
-    let geocoder = new kakao.maps.services.Geocoder();
-
-    let places = new kakao.maps.services.Places();
-
-    interface resultType {
-      address_name: string;
-      x: number;
-      y: number;
-    }
-
-    let callback = function (result: Array<resultType>, status: string) {
-      if (status === kakao.maps.services.Status.OK) {
-        locationName.current = result.map(
-          (obj: resultType) => obj.address_name
-        );
-
-        setLocation(
-          result.map((obj: resultType) => {
-            return { y: obj.y, x: obj.x };
-          })
-        );
-      } else {
-        // 주소 검색이 안되면 키워드 검색 시작
-        places.keywordSearch(searchingWord, callback); // 키워드 검색 (2순위)
-      }
-    };
-
-    geocoder.addressSearch(searchingWord, callback); // 주소 검색 (1순위)
-  };
-
   const clickLocation = (idx: number) => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     let options = {
@@ -97,20 +76,37 @@ const Map = () => {
       // 지도 중심좌표에 마커를 생성합니다
       position: new kakao.maps.LatLng(location[idx].y, location[idx].x),
     });
+
     marker.setMap(map);
   };
-
+  const modalState = useSelector(
+    (state: reduxStateType) => state.modal.value.menuModal
+  );
   return (
     <main>
-      {retrievingLocation && (
-        <div id="map" style={{ position: "static", height: "100vh" }}></div>
-      )}
-      <SearchBar
-        changeSearchingWord={changeSearchingWord}
-        searchPlace={searchPlace}
-      />
-
-      <Location locationName={locationName} clickLocation={clickLocation} />
+      <FlexContainer modalState={modalState}>
+        {modalState && (
+          <Menu
+            setLocation={setLocation}
+            locationName={locationName}
+            clickLocation={clickLocation}
+          />
+        )}
+        {retrievingLocation ? (
+          <div>
+            <SearchBar setLocation={setLocation} locationName={locationName} />
+            <div
+              id="map"
+              style={{
+                position: "relative",
+                height: "100vh",
+              }}
+            ></div>
+          </div>
+        ) : (
+          <LoadingSpinner />
+        )}
+      </FlexContainer>
     </main>
   );
 };
