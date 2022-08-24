@@ -99,7 +99,7 @@ const Map = ({ setLocation, location, locationName }: mapProps) => {
               id="map"
               style={{
                 position: "relative",
-                height: "100vh",
+                height: "92vh",
               }}
             ></div>
           </div>
