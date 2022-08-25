@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
-import Location from "./Location";
 import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
 import { useSelector } from "react-redux";
 import { reduxStateType } from "./Main";
