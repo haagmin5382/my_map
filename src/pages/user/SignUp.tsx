@@ -59,7 +59,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            회원 가입
           </Typography>
           <Box
             component="form"
@@ -75,7 +75,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="이름"
                   autoFocus
                 />
               </Grid>
@@ -84,7 +84,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="성"
                   name="lastName"
                   autoComplete="family-name"
                 />
@@ -94,7 +94,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="이메일"
                   name="email"
                   autoComplete="email"
                 />
@@ -104,7 +104,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="비밀번호"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -115,7 +115,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="confirm Password"
+                  label="비밀번호 확인"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -128,7 +128,7 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              회원 가입
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
