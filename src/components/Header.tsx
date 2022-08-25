@@ -15,7 +15,7 @@ const Header = () => {
     modal: {
       value: {
         menuModal: boolean;
-        loginModal: boolean;
+        alertModal: boolean;
       };
     };
   }

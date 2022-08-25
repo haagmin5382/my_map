@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "components/Header";
 import Main from "components/Main";
-import { useSelector } from "react-redux";
 import SignIn from "pages/user/SignIn";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignUp from "pages/user/SignUp";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

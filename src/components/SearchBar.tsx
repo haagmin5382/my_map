@@ -12,20 +12,22 @@ const SearchBarContainer = styled.div`
   z-index: 9999;
   left: 40vw;
   top: 10vh;
-  > input {
-    width: 15vw;
-    padding: 10px;
-    border-radius: 20px;
-  }
+  > form {
+    > input {
+      width: 15vw;
+      padding: 10px;
+      border-radius: 20px;
+    }
 
-  > button {
-    width: 50px;
-    font-size: 20px;
+    > button {
+      width: 5vw;
+      font-size: 2vw;
 
-    border: none;
-    background: none;
-    color: gray;
-    cursor: pointer;
+      border: none;
+      background: none;
+      color: gray;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -42,9 +44,7 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
     setSearchingWord(e.target.value);
   };
 
-  // const locationName = useRef<Array<string>>([]);
-
-  const searchPlace = (e: React.MouseEvent) => {
+  const searchPlace = () => {
     const { kakao }: any = window;
     let geocoder = new kakao.maps.services.Geocoder();
 
@@ -55,33 +55,44 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
       x: number;
       y: number;
     }
+    if (searchingWord) {
+      let callback = function (result: Array<resultType>, status: string) {
+        if (status === kakao.maps.services.Status.OK) {
+          locationName.current = result.map(
+            (obj: resultType) => obj.address_name
+          );
 
-    let callback = function (result: Array<resultType>, status: string) {
-      if (status === kakao.maps.services.Status.OK) {
-        locationName.current = result.map(
-          (obj: resultType) => obj.address_name
-        );
+          setLocation(
+            result.map((obj: resultType) => {
+              return { y: obj.y, x: obj.x };
+            })
+          );
+        } else {
+          // 주소 검색이 안되면 키워드 검색 시작
+          places.keywordSearch(searchingWord, callback); // 키워드 검색 (2순위)
+        }
+      };
 
-        setLocation(
-          result.map((obj: resultType) => {
-            return { y: obj.y, x: obj.x };
-          })
-        );
-      } else {
-        // 주소 검색이 안되면 키워드 검색 시작
-        places.keywordSearch(searchingWord, callback); // 키워드 검색 (2순위)
-      }
-    };
-
-    geocoder.addressSearch(searchingWord, callback); // 주소 검색 (1순위)
+      geocoder.addressSearch(searchingWord, callback); // 주소 검색 (1순위)
+    }
   };
-
+  window.onkeydown = (e) => {
+    if (e.key === "Enter") {
+      searchPlace();
+    }
+  };
   return (
     <SearchBarContainer>
-      <input placeholder="장소 검색" onChange={changeSearchingWord} />
-      <button onClick={searchPlace}>
-        <BsSearch />
-      </button>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <input
+          placeholder="장소 검색"
+          onChange={changeSearchingWord}
+          required
+        />
+        <button>
+          <BsSearch onClick={searchPlace} />
+        </button>
+      </form>
     </SearchBarContainer>
   );
 };
