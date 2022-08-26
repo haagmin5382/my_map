@@ -5,7 +5,6 @@ import Location from "./Location";
 const MenuContainer = styled.div`
   position: static;
   z-index: 999;
-  width: 20vw;
   height: 90vh;
 `;
 

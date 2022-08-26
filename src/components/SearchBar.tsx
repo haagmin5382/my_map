@@ -4,6 +4,8 @@ import { BsSearch } from "react-icons/bs";
 
 import { useState } from "react";
 import { locationInfo } from "./Map";
+import { useDispatch, useSelector } from "react-redux";
+import { openAndClose } from "redux/modal";
 
 const SearchBarContainer = styled.div`
   position: absolute;
@@ -22,7 +24,7 @@ const SearchBarContainer = styled.div`
     > button {
       width: 5vw;
       font-size: 2vw;
-
+      align-items: center;
       border: none;
       background: none;
       color: gray;
@@ -37,11 +39,25 @@ interface searchBarProps {
   };
   setLocation: (value: Array<locationInfo>) => void;
 }
+interface reduxStateType {
+  modal: {
+    value: {
+      menuModal: boolean;
+      alertModal: boolean;
+    };
+  };
+}
 
 const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
   const [searchingWord, setSearchingWord] = useState("");
   const changeSearchingWord = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchingWord(e.target.value);
+  };
+
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const openMenuModal = () => {
+    dispatch(openAndClose({ ...modalState, menuModal: true }));
   };
 
   const searchPlace = () => {
@@ -74,6 +90,7 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
       };
 
       geocoder.addressSearch(searchingWord, callback); // 주소 검색 (1순위)
+      openMenuModal();
     }
   };
   window.onkeydown = (e) => {
