@@ -1,10 +1,9 @@
-import * as React from "react";
+import react, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,39 +11,54 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useDispatch, useSelector } from "react-redux";
+import { reduxStateType } from "components/Main";
+import { openAndClose } from "redux/modal";
+import AlertModal from "components/alert/AlertModal";
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const newUser = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+      passwordCheck: data.get("passwordCheck"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+    };
+    if (
+      !(
+        newUser.email &&
+        newUser.password &&
+        newUser.passwordCheck &&
+        newUser.firstName &&
+        newUser.lastName
+      )
+    ) {
+      dispatch(
+        openAndClose({ ...modalState, alertModal: "모든 값은 필수입니다." })
+      );
+    }
   };
+
+  useEffect(() => {
+    if (modalState.alertModal) {
+      // modalState.alertModal이 null이 아닌 경우에만 실행시켜야한다.
+      setTimeout(() => {
+        dispatch(openAndClose({ ...modalState, alertModal: null }));
+      }, 5000);
+    }
+  }, [modalState.alertModal]);
 
   return (
     <ThemeProvider theme={theme}>
+      {modalState.alertModal && <AlertModal />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -114,11 +128,11 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="passwordCheck"
                   label="비밀번호 확인"
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  id="passwordCheck"
+                  autoComplete="passwordCheck"
                 />
               </Grid>
             </Grid>

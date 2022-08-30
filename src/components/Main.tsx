@@ -6,6 +6,7 @@ export interface reduxStateType {
   modal: {
     value: {
       menuModal: boolean;
+      alertModal: string;
     };
   };
 }
@@ -23,13 +24,13 @@ const Main = () => {
   const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
   const locationName = useRef<Array<string>>([]);
   return (
-    <div>
+    <>
       <Map
         setLocation={setLocation}
         location={location}
         locationName={locationName}
       />
-    </div>
+    </>
   );
 };
 

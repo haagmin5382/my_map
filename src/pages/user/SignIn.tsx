@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,13 +10,29 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useState } from "react";
+import AlertModal from "components/alert/AlertModal";
+import { useDispatch, useSelector } from "react-redux";
+import { reduxStateType } from "components/Main";
+import { openAndClose } from "redux/modal";
 const theme = createTheme();
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (data.get("email") === "") {
+      dispatch(
+        openAndClose({ ...modalState, alertModal: "이메일을 입력하세요" })
+      );
+    } else if (data.get("password") === "") {
+      dispatch(
+        openAndClose({ ...modalState, alertModal: "비밀번호를 입력하세요" })
+      );
+    }
 
     console.log({
       email: data.get("email"),
@@ -24,8 +40,17 @@ const SignIn = () => {
     });
   };
 
+  useEffect(() => {
+    if (modalState.alertModal) {
+      // modalState.alertModal이 null이 아닌 경우에만 실행시켜야한다.
+      setTimeout(() => {
+        dispatch(openAndClose({ ...modalState, alertModal: null }));
+      }, 5000);
+    }
+  }, [modalState.alertModal]);
   return (
     <ThemeProvider theme={theme}>
+      {modalState.alertModal && <AlertModal />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
