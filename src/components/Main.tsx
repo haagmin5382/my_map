@@ -6,6 +6,7 @@ export interface reduxStateType {
   modal: {
     value: {
       menuModal: boolean;
+      alertModal: string;
     };
   };
 }
