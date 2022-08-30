@@ -19,6 +19,7 @@ const Header = () => {
       };
     };
   }
+
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
 

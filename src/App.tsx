@@ -4,7 +4,6 @@ import Main from "components/Main";
 import SignIn from "pages/user/SignIn";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "pages/user/SignUp";
-import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 
 function App() {
   return (
