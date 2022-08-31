@@ -10,7 +10,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
 import AlertModal from "components/alert/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
@@ -33,11 +32,6 @@ const SignIn = () => {
         openAndClose({ ...modalState, alertModal: "비밀번호를 입력하세요" })
       );
     }
-
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
   };
 
   useEffect(() => {
