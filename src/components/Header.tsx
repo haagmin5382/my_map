@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,6 +9,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { Link } from "react-router-dom";
+import { authService } from "fbase";
+import { userReducer } from "redux/user";
 
 const Header = () => {
   interface reduxStateType {
@@ -22,10 +24,23 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const userState = useSelector((state: any) => state.user.value);
 
   const controlModal = (modalName: keyof typeof modalState) => {
     dispatch(
       openAndClose({ ...modalState, [modalName]: !modalState[modalName] })
+    );
+  };
+
+  const clickLogOut = () => {
+    authService.signOut();
+    dispatch(
+      userReducer({
+        email: "",
+        displayName: "",
+        photoURL: "",
+        uid: "",
+      })
     );
   };
 
@@ -50,12 +65,36 @@ const Header = () => {
               </Link>
             </Typography>
             <Button color="inherit">
-              <Link
-                to="/login"
-                style={{ textDecoration: "none", color: "#ffffff" }}
-              >
-                Login
-              </Link>
+              {userState.displayName && (
+                <Link
+                  to="/profile"
+                  style={{
+                    textDecoration: "none",
+                    color: "#ffffff",
+                    marginRight: "2vw",
+                  }}
+                >
+                  {userState.displayName}의 프로필
+                </Link>
+              )}
+            </Button>
+            <Button color="inherit">
+              {!userState.displayName ? (
+                <Link
+                  to="/login"
+                  style={{ textDecoration: "none", color: "#ffffff" }}
+                >
+                  Login
+                </Link>
+              ) : (
+                <Link
+                  to="/"
+                  style={{ textDecoration: "none", color: "#ffffff" }}
+                  onClick={clickLogOut}
+                >
+                  Logout
+                </Link>
+              )}
             </Button>
           </Toolbar>
         </AppBar>

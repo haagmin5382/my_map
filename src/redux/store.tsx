@@ -1,11 +1,11 @@
 import React from "react";
 import { configureStore } from "@reduxjs/toolkit";
 import modalReducer from "./modal";
-import searchReducer from "./locationSearch";
+import userReducer from "./user";
 
 export default configureStore({
   reducer: {
     modal: modalReducer,
-    search: searchReducer,
+    user: userReducer,
   },
 });

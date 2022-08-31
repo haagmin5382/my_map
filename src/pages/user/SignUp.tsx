@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
 import AlertModal from "components/alert/AlertModal";
+
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import React from "react";

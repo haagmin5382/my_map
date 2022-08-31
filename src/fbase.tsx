@@ -1,4 +1,4 @@
-// import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as firebase from "firebase/app";
 import { getStorage } from "firebase/storage";
@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 };
 
-// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const firebaseInstance = firebase;
