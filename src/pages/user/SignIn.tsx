@@ -14,9 +14,18 @@ import AlertModal from "components/alert/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
+import {
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { authService } from "fbase";
+import { useNavigate } from "react-router-dom";
+
 const theme = createTheme();
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
 
@@ -31,6 +40,18 @@ const SignIn = () => {
       dispatch(
         openAndClose({ ...modalState, alertModal: "비밀번호를 입력하세요" })
       );
+    }
+  };
+
+  const socialLogin = async (e: React.MouseEvent<HTMLElement>) => {
+    let provider;
+    const evnetTarget = e.target as HTMLButtonElement;
+
+    console.log(evnetTarget.name);
+    if (evnetTarget.name === "google") {
+      provider = new GoogleAuthProvider();
+      await signInWithPopup(authService, provider);
+      navigate("/");
     }
   };
 
@@ -95,6 +116,15 @@ const SignIn = () => {
               sx={{ mt: 3, mb: 2 }}
             >
               로그인
+            </Button>
+            <Button
+              name="google"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 0, mb: 2 }}
+              onClick={socialLogin}
+            >
+              구글 로그인
             </Button>
             <Grid container>
               <Grid item xs>
