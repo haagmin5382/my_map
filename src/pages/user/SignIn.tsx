@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,32 +14,55 @@ import AlertModal from "components/alert/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
-import {
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { authService } from "fbase";
 import { useNavigate } from "react-router-dom";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
 const theme = createTheme();
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const [user, setUser] = useState({ email: "", password: "" });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const fillInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value },
+    } = e;
+
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    if (data.get("email") === "") {
+    const auth = getAuth();
+    if (user.email === "") {
       dispatch(
         openAndClose({ ...modalState, alertModal: "이메일을 입력하세요" })
       );
-    } else if (data.get("password") === "") {
+    } else if (user.password === "") {
       dispatch(
         openAndClose({ ...modalState, alertModal: "비밀번호를 입력하세요" })
       );
+    } else {
+      signInWithEmailAndPassword(auth, user.email, user.password)
+        .then(() => navigate("/"))
+        .catch((error) => {
+          console.log(error.message);
+          if (error.message === "Firebase: Error (auth/user-not-found).") {
+            dispatch(
+              openAndClose({ ...modalState, alertModal: "아이디가 없습니다." })
+            );
+          } else {
+            dispatch(
+              openAndClose({
+                ...modalState,
+                alertModal: "비밀번호가 다릅니다.",
+              })
+            );
+          }
+        });
     }
   };
 
@@ -47,7 +70,6 @@ const SignIn = () => {
     let provider;
     const evnetTarget = e.target as HTMLButtonElement;
 
-    console.log(evnetTarget.name);
     if (evnetTarget.name === "google") {
       provider = new GoogleAuthProvider();
       await signInWithPopup(authService, provider);
@@ -90,6 +112,7 @@ const SignIn = () => {
           >
             <TextField
               margin="normal"
+              onChange={fillInput}
               required
               fullWidth
               id="email"
@@ -100,6 +123,7 @@ const SignIn = () => {
             />
             <TextField
               margin="normal"
+              onChange={fillInput}
               required
               fullWidth
               name="password"

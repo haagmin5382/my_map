@@ -65,7 +65,7 @@ const Header = () => {
               </Link>
             </Typography>
             <Button color="inherit">
-              {userState.displayName && (
+              {userState.email && (
                 <Link
                   to="/profile"
                   style={{
@@ -74,12 +74,15 @@ const Header = () => {
                     marginRight: "2vw",
                   }}
                 >
-                  {userState.displayName}의 프로필
+                  {userState.displayName
+                    ? userState.displayName
+                    : userState.email.split("@")[0]}
+                  의 프로필
                 </Link>
               )}
             </Button>
             <Button color="inherit">
-              {!userState.displayName ? (
+              {!userState.email ? (
                 <Link
                   to="/login"
                   style={{ textDecoration: "none", color: "#ffffff" }}

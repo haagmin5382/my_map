@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
 import AlertModal from "components/alert/AlertModal";
+import { useNavigate } from "react-router-dom";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -23,14 +23,14 @@ import React from "react";
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const [newUser, setNewUser] = useState({
     email: "",
     password: "",
     passwordCheck: "",
-    firstName: "",
-    lastName: "",
+    displayName: "",
   });
 
   const fillInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,26 +44,41 @@ export default function SignUp() {
     event.preventDefault();
 
     const auth = getAuth();
-    let userData;
 
     if (
       !(
         newUser.email &&
         newUser.password &&
         newUser.passwordCheck &&
-        newUser.firstName &&
-        newUser.lastName
+        newUser.displayName
       )
     ) {
       dispatch(
         openAndClose({ ...modalState, alertModal: "모든 값은 필수입니다." })
       );
+    } else if (newUser.password !== newUser.passwordCheck) {
+      dispatch(
+        openAndClose({ ...modalState, alertModal: "비밀번호가 다릅니다." })
+      );
     } else {
-      userData = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         newUser.email,
         newUser.password
-      );
+      )
+        .then(() => navigate("/"))
+        .catch((error) => {
+          if (
+            error.message === "Firebase: Error (auth/email-already-in-use)."
+          ) {
+            dispatch(
+              openAndClose({
+                ...modalState,
+                alertModal: "이미 있는 이메일입니다.",
+              })
+            );
+          }
+        });
     }
   };
 
@@ -102,29 +117,19 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="displayName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="이름"
+                  id="displayName"
+                  label="닉네임"
                   autoFocus
                   onChange={fillInput}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="성"
-                  name="lastName"
-                  autoComplete="family-name"
-                  onChange={fillInput}
-                />
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
