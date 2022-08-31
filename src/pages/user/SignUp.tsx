@@ -1,4 +1,4 @@
-import react, { useEffect } from "react";
+import react, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,23 +15,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
 import AlertModal from "components/alert/AlertModal";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+import React from "react";
 
 const theme = createTheme();
 
 export default function SignUp() {
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    passwordCheck: "",
+    firstName: "",
+    lastName: "",
+  });
 
-    const newUser = {
-      email: data.get("email"),
-      password: data.get("password"),
-      passwordCheck: data.get("passwordCheck"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-    };
+  const fillInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value },
+    } = e;
+
+    setNewUser({ ...newUser, [name]: value });
+  };
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const auth = getAuth();
+    let userData;
+
     if (
       !(
         newUser.email &&
@@ -43,6 +56,12 @@ export default function SignUp() {
     ) {
       dispatch(
         openAndClose({ ...modalState, alertModal: "모든 값은 필수입니다." })
+      );
+    } else {
+      userData = await createUserWithEmailAndPassword(
+        auth,
+        newUser.email,
+        newUser.password
       );
     }
   };
@@ -91,6 +110,7 @@ export default function SignUp() {
                   id="firstName"
                   label="이름"
                   autoFocus
+                  onChange={fillInput}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -101,6 +121,7 @@ export default function SignUp() {
                   label="성"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={fillInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,6 +132,7 @@ export default function SignUp() {
                   label="이메일"
                   name="email"
                   autoComplete="email"
+                  onChange={fillInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -122,6 +144,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={fillInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -133,6 +156,7 @@ export default function SignUp() {
                   type="password"
                   id="passwordCheck"
                   autoComplete="passwordCheck"
+                  onChange={fillInput}
                 />
               </Grid>
             </Grid>
