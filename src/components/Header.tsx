@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { Link } from "react-router-dom";
@@ -21,10 +23,20 @@ const Header = () => {
       };
     };
   }
+  interface userType {
+    user: {
+      value: {
+        email: string;
+        displayName: string;
+        photoURL: string;
+        uid: string;
+      };
+    };
+  }
 
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const userState = useSelector((state: any) => state.user.value);
+  const userState = useSelector((state: userType) => state.user.value);
 
   const controlModal = (modalName: keyof typeof modalState) => {
     dispatch(
@@ -64,6 +76,20 @@ const Header = () => {
                 My Map
               </Link>
             </Typography>
+            <Button color="inherit">
+              <Badge badgeContent={1} color="success">
+                <Link
+                  to="/mail"
+                  style={{
+                    textDecoration: "none",
+                    color: "#ffffff",
+                    marginTop: "10%",
+                  }}
+                >
+                  <MailIcon color="action" />
+                </Link>
+              </Badge>
+            </Button>
             <Button color="inherit">
               {userState.email && (
                 <Link
