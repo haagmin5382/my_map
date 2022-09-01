@@ -9,12 +9,12 @@ import { useEffect } from "react";
 import { authService } from "fbase";
 import { userReducer } from "redux/user";
 import { useDispatch, useSelector } from "react-redux";
+import UserMail from "pages/user/UserMail";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      console.log(user);
       dispatch(
         userReducer({
           email: user?.email,
@@ -32,6 +32,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/mail" element={<UserMail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

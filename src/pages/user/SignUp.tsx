@@ -74,7 +74,7 @@ export default function SignUp() {
             dispatch(
               openAndClose({
                 ...modalState,
-                alertModal: "이미 있는 이메일입니다.",
+                alertModal: "이미 존재하는 이메일입니다.",
               })
             );
           }
