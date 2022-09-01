@@ -8,7 +8,7 @@ import Profile from "pages/user/Profile";
 import { useEffect } from "react";
 import { authService } from "fbase";
 import { userReducer } from "redux/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import UserMail from "pages/user/UserMail";
 
 function App() {
