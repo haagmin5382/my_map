@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { locationInfo } from "./Map";
 import Location from "./Location";
+import Paper from "@mui/material/Paper";
+
 const MenuContainer = styled.div`
   position: static;
   z-index: 999;
-  height: 90vh;
+  text-align: center;
 `;
 
 interface menuProps {
@@ -16,19 +18,16 @@ interface menuProps {
   clickLocation: (idx: number) => void;
 }
 
-const Menu = ({ setLocation, locationName, clickLocation }: menuProps) => {
-  // const goToMyLocation = () => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     setLocation([
-  //       { y: position.coords.latitude, x: position.coords.longitude },
-  //     ]);
-  //     locationName.current = [];
-  //   });
-  // };
+const Menu = ({ locationName, clickLocation }: menuProps) => {
   return (
     <MenuContainer>
-      {/* <MenuBotton onClick={goToMyLocation}>현재 내 위치</MenuBotton> */}
-      <Location locationName={locationName} clickLocation={clickLocation} />
+      <Paper elevation={3} style={{ padding: "1vw" }}>
+        {locationName.current.length > 0 ? (
+          <Location locationName={locationName} clickLocation={clickLocation} />
+        ) : (
+          "장소를 검색해주세요"
+        )}
+      </Paper>
     </MenuContainer>
   );
 };
