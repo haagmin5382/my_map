@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import GoogleIcon from "@mui/icons-material/Google";
 import AlertModal from "components/alert/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
@@ -18,6 +19,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { authService } from "fbase";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+
 const theme = createTheme();
 
 const SignIn = () => {
@@ -145,10 +147,15 @@ const SignIn = () => {
               name="google"
               fullWidth
               variant="contained"
-              sx={{ mt: 0, mb: 2 }}
+              sx={{
+                mt: 0,
+                mb: 2,
+                color: "#ffffff",
+                backgroundColor: "#C0BABA",
+              }}
               onClick={socialLogin}
             >
-              구글 로그인
+              <GoogleIcon style={{ marginRight: "1vw" }} /> Google 로그인
             </Button>
             <Grid container>
               <Grid item xs>
