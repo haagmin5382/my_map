@@ -76,22 +76,26 @@ const Header = () => {
                 My Map
               </Link>
             </Typography>
-            <Button color="inherit">
-              <Badge badgeContent={1} color="success">
-                <Link
-                  to="/mail"
-                  style={{
-                    textDecoration: "none",
-                    color: "#ffffff",
-                    marginTop: "10%",
-                  }}
-                >
-                  <MailIcon color="action" />
-                </Link>
-              </Badge>
-            </Button>
-            <Button color="inherit">
-              {userState.email && (
+
+            {userState.email && (
+              <Button color="inherit">
+                <Badge badgeContent={1} color="success">
+                  <Link
+                    to="/mail"
+                    style={{
+                      textDecoration: "none",
+                      color: "#ffffff",
+                      marginTop: "10%",
+                    }}
+                  >
+                    <MailIcon color="action" />
+                  </Link>
+                </Badge>
+              </Button>
+            )}
+
+            {userState.email && (
+              <Button color="inherit">
                 <Link
                   to="/profile"
                   style={{
@@ -105,8 +109,8 @@ const Header = () => {
                     : userState.email.split("@")[0]}
                   의 프로필
                 </Link>
-              )}
-            </Button>
+              </Button>
+            )}
             <Button color="inherit">
               {!userState.email ? (
                 <Link
