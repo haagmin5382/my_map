@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const modalSlice = createSlice({
   name: "modal",
-  initialState: { value: { menuModal: false, alertModal: "" } },
+  initialState: {
+    value: { menuModal: false, alertModal: "", successModal: "" },
+  },
   reducers: {
     openAndClose: (state, action) => {
       state.value = action.payload;

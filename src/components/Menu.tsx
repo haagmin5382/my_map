@@ -21,13 +21,13 @@ interface menuProps {
 const Menu = ({ locationName, clickLocation }: menuProps) => {
   return (
     <MenuContainer>
-      <Paper elevation={3} style={{ padding: "1vw" }}>
-        {locationName.current.length > 0 ? (
-          <Location locationName={locationName} clickLocation={clickLocation} />
-        ) : (
-          "장소를 검색해주세요"
-        )}
-      </Paper>
+      {locationName.current.length > 0 ? (
+        <Location locationName={locationName} clickLocation={clickLocation} />
+      ) : (
+        <Paper elevation={3} style={{ padding: "1vw" }}>
+          장소를 검색해주세요
+        </Paper>
+      )}
     </MenuContainer>
   );
 };

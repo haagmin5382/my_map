@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { openAndClose } from "redux/modal";
 import { reduxStateType } from "./Main";
 import Menu from "./Menu";
 import { FlexContainer } from "./Main";
+import SuccessModal from "./alert/SuccessModal";
+
 export interface locationInfo {
   y: number;
   x: number;
@@ -22,7 +25,7 @@ const Map = ({ setLocation, location, locationName }: mapProps) => {
   // window 객체로부터 스크립트에서 로드한 kakao api를 가져와야 하기 때문에 리액트 컴포넌트 상단에 작성
   // const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
   const [retrievingLocation, setRetrievingLocation] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!retrievingLocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -78,13 +81,13 @@ const Map = ({ setLocation, location, locationName }: mapProps) => {
 
     marker.setMap(map);
   };
-  const modalState = useSelector(
-    (state: reduxStateType) => state.modal.value.menuModal
-  );
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+
   return (
     <main>
-      <FlexContainer modalState={modalState}>
-        {modalState && (
+      {modalState.successModal && <SuccessModal />}
+      <FlexContainer modalState={modalState.menuModal}>
+        {modalState.menuModal && (
           <Menu
             setLocation={setLocation}
             locationName={locationName}

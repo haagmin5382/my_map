@@ -7,6 +7,7 @@ export interface reduxStateType {
     value: {
       menuModal: boolean;
       alertModal: string;
+      successModal: string;
     };
   };
 }

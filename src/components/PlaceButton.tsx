@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import Button from "@mui/material/Button";
 const PlaceContainer = styled.div`
   /* width: 100%; */
   /* max-width: 200px; */
@@ -17,7 +17,14 @@ const PlaceContainer = styled.div`
 `;
 
 const PlaceButton = ({ place }: { place: string }) => {
-  return <PlaceContainer>{place}</PlaceContainer>;
+  return (
+    <PlaceContainer>
+      {place}{" "}
+      <Button sx={{ marginTop: "2vh" }} variant="outlined">
+        저장
+      </Button>
+    </PlaceContainer>
+  );
 };
 
 export default PlaceButton;
