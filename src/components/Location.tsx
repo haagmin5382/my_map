@@ -3,7 +3,7 @@ import PlaceButton from "./PlaceButton";
 import styled from "styled-components";
 
 const LocationContainer = styled.div`
-  height: 90vh;
+  height: 92vh;
   width: 20vw;
   overflow: auto;
   overflow-x: hidden;
