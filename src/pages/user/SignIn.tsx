@@ -76,17 +76,16 @@ const SignIn = () => {
       provider = new GoogleAuthProvider();
       await signInWithPopup(authService, provider);
       navigate("/");
+      dispatch(
+        openAndClose({
+          ...modalState,
+          alertModal: null,
+          successModal: "로그인에 성공했습니다.",
+        })
+      );
     }
   };
 
-  useEffect(() => {
-    if (modalState.alertModal) {
-      // modalState.alertModal이 null이 아닌 경우에만 실행시켜야한다.
-      setTimeout(() => {
-        dispatch(openAndClose({ ...modalState, alertModal: null }));
-      }, 5000);
-    }
-  }, [modalState.alertModal]);
   return (
     <ThemeProvider theme={theme}>
       {modalState.alertModal && <AlertModal />}
