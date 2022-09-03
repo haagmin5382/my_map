@@ -37,8 +37,7 @@ const Profile = () => {
   // console.log(userProfile);
 
   const [newDisplayName, setNewDisplayName] = useState(userProfile.displayName);
-  const [newPassword, setNewPassword] = useState("");
-  const [checkNewPassword, setCheckNewPassword] = useState("");
+
   const dispatch = useDispatch();
 
   const changeDisplayName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,19 +48,6 @@ const Profile = () => {
   };
   // console.log(authService);
   // console.log(authService.currentUser);
-
-  const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { value, name },
-    } = e;
-    console.log(name);
-
-    if (name === "newPassword") {
-      setNewPassword(value);
-    } else {
-      setCheckNewPassword(value);
-    }
-  };
 
   const refreshUser = () => {
     // 회원정보 수정했을 때 유저정보 업데이트

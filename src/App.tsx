@@ -10,6 +10,7 @@ import { authService } from "fbase";
 import { userReducer } from "redux/user";
 import { useDispatch } from "react-redux";
 import UserMail from "pages/user/UserMail";
+import Place from "pages/user/Place";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/place" element={<Place />} />
         <Route path="/mail" element={<UserMail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<SignIn />} />
