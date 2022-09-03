@@ -8,6 +8,7 @@ export interface reduxStateType {
       menuModal: boolean;
       alertModal: string;
       successModal: string;
+      locationModal: boolean;
     };
   };
 }

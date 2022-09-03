@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
+import PinDropIcon from "@mui/icons-material/PinDrop";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { Link } from "react-router-dom";
@@ -76,6 +77,21 @@ const Header = () => {
                 My Map
               </Link>
             </Typography>
+            {userState.email && (
+              <Button color="inherit">
+                {" "}
+                <Link
+                  to="/place"
+                  style={{
+                    textDecoration: "none",
+                    color: "#ffffff",
+                    marginTop: "10%",
+                  }}
+                >
+                  <PinDropIcon />
+                </Link>
+              </Button>
+            )}
 
             {userState.email && (
               <Button color="inherit">

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PlaceButton from "./PlaceButton";
 import styled from "styled-components";
+import LocationModal from "./alert/LocationModal";
 
 const LocationContainer = styled.div`
   height: 90vh;
@@ -17,15 +18,27 @@ interface LocationProps {
 }
 
 const Location = ({ locationName, clickLocation }: LocationProps) => {
+  const [locationIndex, setLocationIndex] = useState(0);
+  const getIndexOfLocation = (idx: number) => {
+    setLocationIndex(idx);
+  };
+  console.log(locationName);
   return (
     <LocationContainer>
       {locationName.current.map((el: string, idx: number) => {
         return (
-          <div key={idx} onClick={() => clickLocation(idx)}>
+          <div
+            key={idx}
+            onClick={() => {
+              clickLocation(idx);
+              getIndexOfLocation(idx);
+            }}
+          >
             <PlaceButton place={el} />
           </div>
         );
       })}
+      <LocationModal location={locationName.current[locationIndex]} />
     </LocationContainer>
   );
 };

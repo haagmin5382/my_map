@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
-
 import { useState } from "react";
 import { locationInfo } from "./Map";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
+import { getPlace } from "redux/getLocation";
 
 const SearchBarContainer = styled.div`
   position: absolute;
@@ -39,11 +39,21 @@ interface searchBarProps {
   };
   setLocation: (value: Array<locationInfo>) => void;
 }
+
+interface locationCoordinate {
+  x: string;
+  y: string;
+}
 interface reduxStateType {
   modal: {
     value: {
       menuModal: boolean;
       alertModal: boolean;
+    };
+  };
+  location: {
+    value: {
+      location: Array<locationCoordinate>;
     };
   };
 }
@@ -55,7 +65,12 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
   };
 
   const dispatch = useDispatch();
+
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const locationState = useSelector(
+    (state: reduxStateType) => state.location.value.location
+  );
+
   const openMenuModal = () => {
     dispatch(openAndClose({ ...modalState, menuModal: true }));
   };
@@ -63,7 +78,6 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
   const searchPlace = () => {
     const { kakao }: any = window;
     let geocoder = new kakao.maps.services.Geocoder();
-
     let places = new kakao.maps.services.Places();
 
     interface resultType {
@@ -81,6 +95,13 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
           setLocation(
             result.map((obj: resultType) => {
               return { y: obj.y, x: obj.x };
+            })
+          );
+          dispatch(
+            getPlace({
+              location: result.map((obj: resultType) => {
+                return { y: obj.y, x: obj.x };
+              }),
             })
           );
         } else {

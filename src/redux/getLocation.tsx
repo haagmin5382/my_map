@@ -1,17 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const modalSlice = createSlice({
-  name: "modal",
+export const locationSlice = createSlice({
+  name: "location",
   initialState: {
     value: {
-      menuModal: false,
-      alertModal: "",
-      successModal: "",
-      locationModal: false,
+      location: [],
     },
   },
   reducers: {
-    openAndClose: (state, action) => {
+    getPlace: (state, action) => {
       state.value = action.payload;
     },
   },
@@ -21,5 +18,5 @@ export const modalSlice = createSlice({
 // initialState => 데이터의 초기값
 // reducers => 상태가 변하면 어떻게 실행되는지 정한다.
 
-export const { openAndClose } = modalSlice.actions;
-export default modalSlice.reducer;
+export const { getPlace } = locationSlice.actions;
+export default locationSlice.reducer;
