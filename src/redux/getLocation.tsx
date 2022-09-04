@@ -4,7 +4,7 @@ export const locationSlice = createSlice({
   name: "location",
   initialState: {
     value: {
-      location: [{ y: 33.450701, x: 126.570667 }],
+      location: [{ y: "", x: "" }],
     },
   },
   reducers: {

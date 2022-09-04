@@ -29,20 +29,24 @@ const Map = ({ locationName }: mapProps) => {
   const locationState = useSelector(
     (state: reduxStateType) => state.location.value.location
   );
-
+  // console.log(retrievingLocation);
+  // console.log("locationState : ", locationState);
   useEffect(() => {
     if (!retrievingLocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(
-          getPlace({
-            location: [
-              { y: position.coords.latitude, x: position.coords.longitude },
-            ],
-          })
-        );
+      // retrievingLocation가 false일 때 실행
+      if (!locationState[0].y && !locationState[0].x) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          dispatch(
+            getPlace({
+              location: [
+                { y: position.coords.latitude, x: position.coords.longitude },
+              ],
+            })
+          );
+        });
+      }
 
-        setRetrievingLocation(true);
-      });
+      setRetrievingLocation(true);
     } else {
       // 현재 위치 정보를 불러와야 지도를 그린다.
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
