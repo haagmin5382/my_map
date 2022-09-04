@@ -15,6 +15,14 @@ export interface reduxStateType {
       locationModal: boolean;
     };
   };
+  user: {
+    value: {
+      email: string;
+      displayName: string;
+      photoURL: string;
+      uid: string;
+    };
+  };
   location: {
     value: {
       location: Array<locationCoordinate>;

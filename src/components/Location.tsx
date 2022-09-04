@@ -22,7 +22,6 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
   const getIndexOfLocation = (idx: number) => {
     setLocationIndex(idx);
   };
-  console.log(locationName);
   return (
     <LocationContainer>
       {locationName.current.map((el: string, idx: number) => {
@@ -38,7 +37,10 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
           </div>
         );
       })}
-      <LocationModal location={locationName.current[locationIndex]} />
+      <LocationModal
+        location={locationName.current[locationIndex]}
+        locationIndex={locationIndex}
+      />
     </LocationContainer>
   );
 };

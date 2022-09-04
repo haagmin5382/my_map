@@ -9,6 +9,9 @@ import { openAndClose } from "redux/modal";
 import { reduxStateType } from "components/Main";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
+import React from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { dbService, storageService } from "fbase";
 const style = {
   position: "absolute",
   top: "50%",
@@ -21,13 +24,43 @@ const style = {
   p: 4,
 };
 
-export default function LocationModal({ location }: { location: string }) {
+export default function LocationModal({
+  location,
+  locationIndex,
+}: {
+  location: string;
+  locationIndex: number;
+}) {
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const locationState = useSelector(
+    (state: reduxStateType) => state.location.value
+  );
+  const userState = useSelector((state: reduxStateType) => state.user.value);
+
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(openAndClose({ ...modalState, locationModal: false }));
   };
-  const saveLocation = () => {};
+  const [inputLocation, setInputLocation] = useState("");
+  const inputLocationName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = e;
+    setInputLocation(value);
+  };
+
+  const saveLocation = async () => {
+    if (inputLocation) {
+      const locationContent = {
+        uid: userState.uid,
+        title: inputLocation,
+        location: location,
+        coordinate: locationState.location[locationIndex],
+      };
+      await addDoc(collection(dbService, "userPlace"), locationContent);
+    }
+    handleClose();
+  };
 
   return (
     <>
@@ -56,6 +89,7 @@ export default function LocationModal({ location }: { location: string }) {
               name="location"
               autoComplete="location"
               autoFocus
+              onChange={inputLocationName}
             />
             <Typography
               id="transition-modal-description"
