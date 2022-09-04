@@ -11,7 +11,6 @@ const MenuContainer = styled.div`
 `;
 
 interface menuProps {
-  setLocation: (value: Array<locationInfo>) => void;
   locationName: {
     current: Array<string>;
   };

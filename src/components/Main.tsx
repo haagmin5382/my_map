@@ -2,6 +2,10 @@ import React, { useState, useRef } from "react";
 import Map from "components/Map";
 import styled from "styled-components";
 
+interface locationCoordinate {
+  x: string;
+  y: string;
+}
 export interface reduxStateType {
   modal: {
     value: {
@@ -9,6 +13,11 @@ export interface reduxStateType {
       alertModal: string;
       successModal: string;
       locationModal: boolean;
+    };
+  };
+  location: {
+    value: {
+      location: Array<locationCoordinate>;
     };
   };
 }
@@ -23,15 +32,11 @@ export const FlexContainer = styled.div<ModalProps>`
   transition: 0.5s;
 `;
 const Main = () => {
-  const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
+  // const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
   const locationName = useRef<Array<string>>([]);
   return (
     <>
-      <Map
-        setLocation={setLocation}
-        location={location}
-        locationName={locationName}
-      />
+      <Map locationName={locationName} />
     </>
   );
 };
