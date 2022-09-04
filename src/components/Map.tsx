@@ -25,13 +25,13 @@ const Map = ({ locationName }: mapProps) => {
   const [retrievingLocation, setRetrievingLocation] = useState(false);
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
+
   const locationState = useSelector(
     (state: reduxStateType) => state.location.value.location
   );
 
   useEffect(() => {
     if (!retrievingLocation) {
-      // console.log("locationState 34 : ", locationState);
       navigator.geolocation.getCurrentPosition((position) => {
         dispatch(
           getPlace({
@@ -43,13 +43,8 @@ const Map = ({ locationName }: mapProps) => {
 
         setRetrievingLocation(true);
       });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (retrievingLocation) {
+    } else {
       // 현재 위치 정보를 불러와야 지도를 그린다.
-      // console.log("locationState 52 : ", locationState);
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
@@ -72,7 +67,7 @@ const Map = ({ locationName }: mapProps) => {
         marker.setMap(map);
       }
     }
-  }, [retrievingLocation]);
+  });
 
   const clickLocation = (idx: number) => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
