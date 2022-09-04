@@ -37,7 +37,6 @@ interface searchBarProps {
   locationName: {
     current: Array<string>;
   };
-  setLocation: (value: Array<locationInfo>) => void;
 }
 
 interface locationCoordinate {
@@ -58,7 +57,7 @@ interface reduxStateType {
   };
 }
 
-const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
+const SearchBar = ({ locationName }: searchBarProps) => {
   const [searchingWord, setSearchingWord] = useState("");
   const changeSearchingWord = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchingWord(e.target.value);
@@ -92,11 +91,11 @@ const SearchBar = ({ locationName, setLocation }: searchBarProps) => {
             (obj: resultType) => obj.address_name
           );
 
-          setLocation(
-            result.map((obj: resultType) => {
-              return { y: obj.y, x: obj.x };
-            })
-          );
+          // setLocation(
+          //   result.map((obj: resultType) => {
+          //     return { y: obj.y, x: obj.x };
+          //   })
+          // );
           dispatch(
             getPlace({
               location: result.map((obj: resultType) => {
