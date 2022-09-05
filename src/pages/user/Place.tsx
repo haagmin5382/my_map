@@ -4,7 +4,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import PlaceCard from "components/PlaceCard";
 import { useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
-import EmptyPage from "components/alert/EmptyPage";
+import EmptyPage from "components/modal/EmptyPage";
 const Place = () => {
   const [places, setPlaces] = useState<Array<any>>([]);
   const userState = useSelector((state: reduxStateType) => state.user.value);

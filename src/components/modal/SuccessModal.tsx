@@ -19,8 +19,9 @@ const SuccessModal = () => {
 
   return (
     <AlertModalConatiner>
-      <Stack sx={{ width: "100%", position: "fixed" }} spacing={2}></Stack>
-      <Alert severity="success">{modalState.successModal}</Alert>
+      <Stack sx={{ width: "100%", position: "fixed" }} spacing={2}>
+        <Alert severity="success">{modalState.successModal}</Alert>
+      </Stack>
     </AlertModalConatiner>
   );
 };

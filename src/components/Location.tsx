@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PlaceButton from "./PlaceButton";
 import styled from "styled-components";
-import LocationModal from "./alert/LocationModal";
+import LocationModal from "./modal/LocationModal";
 
 const LocationContainer = styled.div`
   height: 90vh;

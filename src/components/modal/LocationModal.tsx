@@ -12,8 +12,7 @@ import Button from "@mui/material/Button";
 import React from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService } from "fbase";
-import AlertModal from "./AlertModal";
-import SuccessModal from "./SuccessModal";
+
 const style = {
   position: "absolute",
   top: "50%",

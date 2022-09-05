@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
 import PinDropIcon from "@mui/icons-material/PinDrop";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { Link } from "react-router-dom";
 import { authService } from "fbase";
 import { userReducer } from "redux/user";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
+import SuccessModal from "./modal/SuccessModal";
 
 const Header = () => {
   interface reduxStateType {
@@ -21,6 +25,7 @@ const Header = () => {
       value: {
         menuModal: boolean;
         alertModal: boolean;
+        successModal: string;
       };
     };
   }
@@ -34,7 +39,7 @@ const Header = () => {
       };
     };
   }
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const userState = useSelector((state: userType) => state.user.value);
@@ -56,9 +61,27 @@ const Header = () => {
       })
     );
   };
+  const loginOrLogOut = async () => {
+    if (userState.email) {
+      await clickLogOut();
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  };
 
+  const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.currentTarget as HTMLButtonElement;
+    setAnchorElUser(target);
+  };
   return (
     <header>
+      {modalState.successModal && <SuccessModal />}
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ height: "8vh" }}>
           <Toolbar>
@@ -70,81 +93,79 @@ const Header = () => {
               sx={{ mr: 2 }}
               onClick={() => controlModal("menuModal")}
             >
-              <MenuIcon />
+              {modalState.menuModal ? (
+                <KeyboardDoubleArrowLeftIcon />
+              ) : (
+                <KeyboardDoubleArrowRightIcon />
+              )}
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/" style={{ textDecoration: "none", color: "#ffffff" }}>
                 My Map
               </Link>
             </Typography>
-            {userState.email && (
-              <Button color="inherit">
-                {" "}
-                <Link
-                  to="/place"
-                  style={{
-                    textDecoration: "none",
-                    color: "#ffffff",
-                    marginTop: "10%",
+
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                {userState.photoURL ? (
+                  <Avatar src={userState.photoURL} />
+                ) : (
+                  <Avatar alt="Remy Sharp" />
+                )}
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {userState.email && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate("/place");
                   }}
                 >
-                  <PinDropIcon />
-                </Link>
-              </Button>
-            )}
-
-            {userState.email && (
-              <Button color="inherit">
-                <Badge badgeContent={1} color="success">
-                  <Link
-                    to="/mail"
-                    style={{
-                      textDecoration: "none",
-                      color: "#ffffff",
-                      marginTop: "10%",
-                    }}
-                  >
-                    <MailIcon color="action" />
-                  </Link>
-                </Badge>
-              </Button>
-            )}
-
-            {userState.email && (
-              <Button color="inherit">
-                <Link
-                  to="/profile"
-                  style={{
-                    textDecoration: "none",
-                    color: "#ffffff",
-                    marginRight: "2vw",
-                  }}
-                >
-                  {userState.displayName
-                    ? userState.displayName
-                    : userState.email.split("@")[0]}
-                  의 프로필
-                </Link>
-              </Button>
-            )}
-            <Button color="inherit">
-              {!userState.email ? (
-                <Link
-                  to="/login"
-                  style={{ textDecoration: "none", color: "#ffffff" }}
-                >
-                  Login
-                </Link>
-              ) : (
-                <Link
-                  to="/"
-                  style={{ textDecoration: "none", color: "#ffffff" }}
-                  onClick={clickLogOut}
-                >
-                  Logout
-                </Link>
+                  {userState.email ? "저장한 장소" : null}
+                </MenuItem>
               )}
-            </Button>
+              {userState.email && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate("/profile");
+                  }}
+                >
+                  <Typography textAlign="center">
+                    {userState.displayName
+                      ? userState.displayName
+                      : userState.email.split("@")[0]}
+                    's profile
+                  </Typography>
+                </MenuItem>
+              )}
+              <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  loginOrLogOut();
+                }}
+              >
+                <Typography textAlign="center">
+                  {!userState.email ? "Login" : "Logout"}
+                </Typography>
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </Box>
