@@ -51,7 +51,6 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, user.email, user.password)
         .then(() => navigate("/"))
         .catch((error) => {
-          console.log(error.message);
           if (error.message === "Firebase: Error (auth/user-not-found).") {
             dispatch(
               openAndClose({ ...modalState, alertModal: "아이디가 없습니다." })

@@ -6,6 +6,7 @@ import { reduxStateType } from "./Main";
 import Menu from "./Menu";
 import { FlexContainer } from "./Main";
 import SuccessModal from "./alert/SuccessModal";
+import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
 
 export interface locationInfo {
@@ -31,6 +32,32 @@ const Map = ({ locationName }: mapProps) => {
   );
   // console.log(retrievingLocation);
   // console.log("locationState : ", locationState);
+  const goWhereIam = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      let options = {
+        //지도를 생성할 때 필요한 기본 옵션
+
+        center: new kakao.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        ), //지도의 중심좌표.
+        // 현재 자신의 위치를 중심으로 한다.
+        level: 5, //지도의 레벨(확대, 축소 정도)
+      };
+
+      let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+      let marker = new kakao.maps.Marker({
+        // 지도 중심좌표에 마커를 생성합니다
+        position: new kakao.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        ),
+      });
+      marker.setMap(map);
+    });
+  };
   useEffect(() => {
     if (!retrievingLocation) {
       // retrievingLocation가 false일 때 실행
@@ -103,6 +130,7 @@ const Map = ({ locationName }: mapProps) => {
         {modalState.menuModal && (
           <Menu locationName={locationName} clickLocation={clickLocation} />
         )}
+
         {retrievingLocation ? (
           <div>
             <SearchBar locationName={locationName} />
@@ -117,6 +145,13 @@ const Map = ({ locationName }: mapProps) => {
         ) : (
           <LoadingSpinner />
         )}
+        <div
+          style={{ position: "fixed", zIndex: 999999, bottom: 10, right: 10 }}
+        >
+          <Button variant="contained" onClick={goWhereIam}>
+            현재 내 위치 보기
+          </Button>
+        </div>
       </FlexContainer>
     </main>
   );

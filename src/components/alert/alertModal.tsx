@@ -11,6 +11,7 @@ export const AlertModalConatiner = styled.div`
   width: "100%";
   animation: pade 4s;
   opacity: 0;
+  z-index: 9999999;
   @keyframes pade {
     0% {
       opacity: 0;
