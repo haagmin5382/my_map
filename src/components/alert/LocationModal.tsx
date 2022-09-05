@@ -11,7 +11,9 @@ import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
 import { addDoc, collection } from "firebase/firestore";
-import { dbService, storageService } from "fbase";
+import { dbService } from "fbase";
+import AlertModal from "./AlertModal";
+import SuccessModal from "./SuccessModal";
 const style = {
   position: "absolute",
   top: "50%",
@@ -58,8 +60,21 @@ export default function LocationModal({
         coordinate: locationState.location[locationIndex],
       };
       await addDoc(collection(dbService, "userPlace"), locationContent);
+      dispatch(
+        openAndClose({
+          ...modalState,
+          successModal: "장소를 저장했습니다.",
+        })
+      );
+      handleClose();
+    } else {
+      dispatch(
+        openAndClose({
+          ...modalState,
+          alertModal: "제목을 작성해주세요",
+        })
+      );
     }
-    handleClose();
   };
 
   return (
@@ -91,6 +106,7 @@ export default function LocationModal({
               autoFocus
               onChange={inputLocationName}
             />
+
             <Typography
               id="transition-modal-description"
               sx={{ mt: 2 }}
