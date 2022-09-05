@@ -2,14 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
-import { locationInfo } from "./Map";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { getPlace } from "redux/getLocation";
 
 const SearchBarContainer = styled.div`
-  position: absolute;
-  /* top: -98vh; */
+  position: fixed;
   text-align: center;
   z-index: 9999;
   left: 40vw;
@@ -19,16 +17,6 @@ const SearchBarContainer = styled.div`
       width: 15vw;
       padding: 10px;
       border-radius: 20px;
-    }
-
-    > button {
-      width: 5vw;
-      font-size: 2vw;
-      align-items: center;
-      border: none;
-      background: none;
-      color: gray;
-      cursor: pointer;
     }
   }
 `;
@@ -66,9 +54,6 @@ const SearchBar = ({ locationName }: searchBarProps) => {
   const dispatch = useDispatch();
 
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const locationState = useSelector(
-    (state: reduxStateType) => state.location.value.location
-  );
 
   const openMenuModal = () => {
     dispatch(openAndClose({ ...modalState, menuModal: true }));
@@ -90,12 +75,6 @@ const SearchBar = ({ locationName }: searchBarProps) => {
           locationName.current = result.map(
             (obj: resultType) => obj.address_name
           );
-
-          // setLocation(
-          //   result.map((obj: resultType) => {
-          //     return { y: obj.y, x: obj.x };
-          //   })
-          // );
           dispatch(
             getPlace({
               location: result.map((obj: resultType) => {
@@ -125,10 +104,10 @@ const SearchBar = ({ locationName }: searchBarProps) => {
           placeholder="장소 검색"
           onChange={changeSearchingWord}
           required
+          style={{ marginRight: "10px" }}
         />
-        <button>
-          <BsSearch onClick={searchPlace} />
-        </button>
+
+        <BsSearch onClick={searchPlace} size="25" cursor="pointer" />
       </form>
     </SearchBarContainer>
   );

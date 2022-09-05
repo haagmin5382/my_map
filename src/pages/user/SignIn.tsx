@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
-import AlertModal from "components/alert/AlertModal";
+import AlertModal from "components/modal/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";

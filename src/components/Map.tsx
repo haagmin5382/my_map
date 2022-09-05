@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { reduxStateType } from "./Main";
 import Menu from "./Menu";
 import { FlexContainer } from "./Main";
-import SuccessModal from "./alert/SuccessModal";
+import SuccessModal from "./modal/SuccessModal";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
 
@@ -26,14 +26,13 @@ const Map = ({ locationName }: mapProps) => {
   const [retrievingLocation, setRetrievingLocation] = useState(false);
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-
   const locationState = useSelector(
     (state: reduxStateType) => state.location.value.location
   );
   // console.log(retrievingLocation);
   // console.log("locationState : ", locationState);
-  const goWhereIam = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
+  const goWhereIam = async () => {
+    await navigator.geolocation.getCurrentPosition((position) => {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
@@ -43,7 +42,7 @@ const Map = ({ locationName }: mapProps) => {
           position.coords.longitude
         ), //지도의 중심좌표.
         // 현재 자신의 위치를 중심으로 한다.
-        level: 5, //지도의 레벨(확대, 축소 정도)
+        level: 3, //지도의 레벨(확대, 축소 정도)
       };
 
       let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -58,10 +57,12 @@ const Map = ({ locationName }: mapProps) => {
       marker.setMap(map);
     });
   };
+
   useEffect(() => {
     if (!retrievingLocation) {
       // retrievingLocation가 false일 때 실행
       if (!locationState[0].y && !locationState[0].x) {
+        // locationState.x , locationState.y가 없을 때 실행 (처음 사이트에 접속했을 때)
         navigator.geolocation.getCurrentPosition((position) => {
           dispatch(
             getPlace({
@@ -71,10 +72,11 @@ const Map = ({ locationName }: mapProps) => {
             })
           );
         });
+        // goWhereIam();
       }
-
       setRetrievingLocation(true);
     } else {
+      // retrievingLocation가 true일 때 실행
       // 현재 위치 정보를 불러와야 지도를 그린다.
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
@@ -82,7 +84,7 @@ const Map = ({ locationName }: mapProps) => {
 
         center: new kakao.maps.LatLng(locationState[0].y, locationState[0].x), //지도의 중심좌표.
         // 현재 자신의 위치를 중심으로 한다.
-        level: locationState.length > 1 ? 5 : 3, //지도의 레벨(확대, 축소 정도)
+        level: locationState.length > 1 ? 5 : 3, //지도의 레벨(확대, 축소 정도), 레벨이 높을 수록 보는 면적이 넓어진다.
       };
 
       let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -141,17 +143,22 @@ const Map = ({ locationName }: mapProps) => {
                 height: "92vh",
               }}
             ></div>
+            <div
+              style={{
+                position: "fixed",
+                zIndex: 999999,
+                bottom: 10,
+                right: 10,
+              }}
+            >
+              <Button variant="contained" onClick={goWhereIam}>
+                현재 내 위치 보기
+              </Button>
+            </div>
           </div>
         ) : (
           <LoadingSpinner />
         )}
-        <div
-          style={{ position: "fixed", zIndex: 999999, bottom: 10, right: 10 }}
-        >
-          <Button variant="contained" onClick={goWhereIam}>
-            현재 내 위치 보기
-          </Button>
-        </div>
       </FlexContainer>
     </main>
   );

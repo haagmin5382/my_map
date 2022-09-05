@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
-import AlertModal from "components/alert/AlertModal";
+import AlertModal from "components/modal/AlertModal";
 import { useNavigate } from "react-router-dom";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";

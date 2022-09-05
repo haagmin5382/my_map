@@ -8,7 +8,7 @@ import { updateProfile } from "firebase/auth";
 import { userReducer } from "redux/user";
 import { openAndClose } from "redux/modal";
 import { reduxStateType } from "components/Main";
-import AlertModal from "components/alert/AlertModal";
+import AlertModal from "components/modal/AlertModal";
 
 interface userType {
   user: {
