@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { locationInfo } from "./Map";
 import Location from "./Location";
-import Paper from "@mui/material/Paper";
 import EmptyPlace from "./Loading/EmptyPlace";
+import Box from "@mui/material/Box";
 
 const MenuContainer = styled.div`
   position: static;
   z-index: 999;
   text-align: center;
-  /* text-align: right; */
+
+  background-color: #026bab;
 `;
 
 interface menuProps {
@@ -22,11 +22,13 @@ interface menuProps {
 const Menu = ({ locationName, clickLocation }: menuProps) => {
   return (
     <MenuContainer>
-      {locationName.current.length > 0 ? (
-        <Location locationName={locationName} clickLocation={clickLocation} />
-      ) : (
-        <EmptyPlace />
-      )}
+      <Box sx={{ boxShadow: 10, height: "91.5vh" }}>
+        {locationName.current.length > 0 ? (
+          <Location locationName={locationName} clickLocation={clickLocation} />
+        ) : (
+          <EmptyPlace />
+        )}
+      </Box>
     </MenuContainer>
   );
 };

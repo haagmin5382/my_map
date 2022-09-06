@@ -25,11 +25,24 @@ const ProfileContainer = styled.div`
   width: 30vw;
   margin: 0 auto;
   text-align: center;
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
+
+  Button {
+    @media screen and (max-width: 500px) {
+      font-size: 10px;
+    }
+  }
 `;
 
 const ProfileImg = styled.img`
-  width: 10vw;
+  width: 15vw;
   border-radius: 50%;
+  @media screen and (max-width: 500px) {
+    width: 30vw;
+  }
 `;
 
 const Profile = () => {
@@ -46,9 +59,6 @@ const Profile = () => {
     } = e;
     setNewDisplayName(value);
   };
-  // console.log(authService);
-  // console.log(authService.currentUser);
-
   const refreshUser = () => {
     // 회원정보 수정했을 때 유저정보 업데이트
     const user = authService.currentUser;
@@ -99,6 +109,7 @@ const Profile = () => {
           autoComplete="displayName"
           autoFocus
           onChange={changeDisplayName}
+          sx={{ fontSize: "small" }}
         />
 
         <Button

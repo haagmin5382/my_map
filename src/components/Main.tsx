@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import Map from "components/Map";
 import styled from "styled-components";
 
@@ -40,7 +40,6 @@ export const FlexContainer = styled.div<ModalProps>`
   transition: 0.5s;
 `;
 const Main = () => {
-  // const [location, setLocation] = useState([{ y: 33.450701, x: 126.570667 }]);
   const locationName = useRef<Array<string>>([]);
   return (
     <>
