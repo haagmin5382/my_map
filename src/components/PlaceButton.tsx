@@ -17,6 +17,15 @@ const PlaceContainer = styled.div`
   color: black;
 
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
+  Button {
+    font-size: 12px;
+    @media screen and (max-width: 500px) {
+      font-size: 8px;
+    }
+  }
 `;
 
 const PlaceButton = ({ place }: { place: string }) => {
@@ -30,9 +39,10 @@ const PlaceButton = ({ place }: { place: string }) => {
       <PlaceContainer>
         {place}
         <Button
-          sx={{ marginTop: "2vh" }}
+          sx={{ margin: "1vh" }}
           variant="outlined"
           onClick={clickSave}
+          className="saveButton"
         >
           저장
         </Button>

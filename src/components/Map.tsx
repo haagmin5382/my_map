@@ -61,7 +61,8 @@ const Map = ({ locationName }: mapProps) => {
   useEffect(() => {
     if (!retrievingLocation) {
       // retrievingLocation가 false일 때 실행
-      if (!locationState[0].y && !locationState[0].x) {
+
+      if (!(locationState[0].y || locationState[0].x)) {
         // locationState.x , locationState.y가 없을 때 실행 (처음 사이트에 접속했을 때)
         navigator.geolocation.getCurrentPosition((position) => {
           dispatch(
@@ -72,11 +73,11 @@ const Map = ({ locationName }: mapProps) => {
             })
           );
         });
-        // goWhereIam();
       }
-      setRetrievingLocation(true);
+      setRetrievingLocation(true); // else 부분 실행
     } else {
       // retrievingLocation가 true일 때 실행
+
       // 현재 위치 정보를 불러와야 지도를 그린다.
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
