@@ -5,9 +5,9 @@ const EmptyPlace = () => {
     <div>
       <FmdBadTwoToneIcon
         // fontSize="large"
-        sx={{ color: "gray", marginTop: "10vw", fontSize: "10vw" }}
+        sx={{ color: "white", marginTop: "10vw", fontSize: "10vw" }}
       />
-      <div style={{ color: "gray", fontSize: "2vw" }}>
+      <div style={{ color: "white", fontSize: "2vw" }}>
         아직 장소를 검색하지 않았어요
       </div>
     </div>

@@ -6,20 +6,18 @@ import { openAndClose } from "redux/modal";
 import { reduxStateType } from "./Main";
 import { useNavigate } from "react-router-dom";
 const PlaceContainer = styled.div`
-  /* width: 100%; */
-  /* max-width: 200px; */
-
+  display: flex;
+  justify-content: space-between;
   padding: 1vw;
-  text-align: left;
-  border-bottom: 1px solid black;
-
-  /* border-radius: 20px; */
+  border-bottom: 1px solid white;
   margin: 0.5vw;
-  color: black;
-
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
+    display: inline-block;
     font-size: 10px;
+    justify-content: flex-start;
   }
   Button {
     font-size: 12px;
@@ -33,6 +31,7 @@ const PlaceButton = ({ place }: { place: string }) => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const userState = useSelector((state: reduxStateType) => state.user.value);
+  console.log(useSelector((state) => state));
   const navigate = useNavigate();
   const clickSave = () => {
     if (userState.email) {
@@ -44,8 +43,19 @@ const PlaceButton = ({ place }: { place: string }) => {
   return (
     <>
       <PlaceContainer>
-        {place}
-        <Button sx={{ margin: "1vh" }} variant="outlined" onClick={clickSave}>
+        <span>{place}</span>
+        <Button
+          sx={{
+            background: "white",
+            ":hover": {
+              background: "#026BAB",
+              border: "1px solid white",
+              color: "white",
+            },
+          }}
+          variant="outlined"
+          onClick={clickSave}
+        >
           저장
         </Button>
       </PlaceContainer>

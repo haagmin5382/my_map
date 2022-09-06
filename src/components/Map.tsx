@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { reduxStateType } from "./Main";
 import Menu from "./Menu";
 import { FlexContainer } from "./Main";
-import SuccessModal from "./modal/SuccessModal";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
 

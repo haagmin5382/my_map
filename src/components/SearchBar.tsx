@@ -10,11 +10,11 @@ const SearchBarContainer = styled.div`
   position: fixed;
   text-align: center;
   z-index: 9999;
-  left: 40vw;
+  left: 30vw;
   top: 10vh;
   > form {
     > input {
-      width: 15vw;
+      width: 30vw;
       padding: 10px;
       border-radius: 20px;
     }
