@@ -5,7 +5,7 @@ import LocationModal from "./modal/LocationModal";
 
 const LocationContainer = styled.div`
   height: 90vh;
-  width: 20vw;
+  width: 30vw;
   overflow: auto;
   overflow-x: hidden;
   position: absolute;

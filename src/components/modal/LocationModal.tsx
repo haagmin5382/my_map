@@ -13,12 +13,27 @@ import React from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService } from "fbase";
 
+const detectMobileDevice = (agent: string) => {
+  const mobileRegex = [
+    /Android/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+
+  return mobileRegex.some((mobile) => agent.match(mobile));
+};
+
+const isMobile = detectMobileDevice(window.navigator.userAgent);
+
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: isMobile ? "50vw" : "30vw",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -91,7 +106,12 @@ export default function LocationModal({
       >
         <Fade in={modalState.locationModal}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            <Typography
+              id="transition-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ fontSize: isMobile ? "small" : "large" }}
+            >
               <div>{location}</div>이 장소를 저장하시겠습니까?
             </Typography>
             <TextField
@@ -105,19 +125,21 @@ export default function LocationModal({
               autoFocus
               onChange={inputLocationName}
             />
-
-            <Typography
-              id="transition-modal-description"
-              sx={{ mt: 2 }}
-            ></Typography>
             <div style={{ textAlign: "center" }}>
-              <Button variant="contained" onClick={saveLocation}>
+              <Button
+                variant="contained"
+                onClick={saveLocation}
+                sx={{ fontSize: isMobile ? "small" : "large" }}
+              >
                 저장
               </Button>
               <Button
                 variant="contained"
                 sx={{ margin: "1vw" }}
-                style={{ backgroundColor: "red" }}
+                style={{
+                  backgroundColor: "red",
+                  fontSize: isMobile ? "small" : "large",
+                }}
                 onClick={handleClose}
               >
                 취소

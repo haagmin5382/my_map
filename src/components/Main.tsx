@@ -36,7 +36,7 @@ export interface ModalProps {
 
 export const FlexContainer = styled.div<ModalProps>`
   display: grid;
-  grid-template-columns: ${(props) => (props.modalState ? "20% 80%" : "1fr")};
+  grid-template-columns: ${(props) => (props.modalState ? "30% 70%" : "1fr")};
   transition: 0.5s;
 `;
 const Main = () => {
