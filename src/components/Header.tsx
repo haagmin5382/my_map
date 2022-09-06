@@ -18,6 +18,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "./modal/SuccessModal";
+import AlertModal from "./modal/AlertModal";
 
 const Header = () => {
   interface reduxStateType {
@@ -82,6 +83,7 @@ const Header = () => {
   return (
     <header>
       {modalState.successModal && <SuccessModal />}
+      {modalState.alertModal && <AlertModal />}
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ height: "8vh" }}>
           <Toolbar>

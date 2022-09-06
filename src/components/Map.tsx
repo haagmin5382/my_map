@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
-import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "./Loading/LoadingSpinner";
 import { useSelector, useDispatch } from "react-redux";
 import { reduxStateType } from "./Main";
 import Menu from "./Menu";
@@ -127,7 +127,7 @@ const Map = ({ locationName }: mapProps) => {
 
   return (
     <main>
-      {modalState.successModal && <SuccessModal />}
+      {/* {modalState.successModal && <SuccessModal />} */}
 
       <FlexContainer modalState={modalState.menuModal}>
         {modalState.menuModal && (

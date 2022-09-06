@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { locationInfo } from "./Map";
 import Location from "./Location";
 import Paper from "@mui/material/Paper";
+import EmptyPlace from "./Loading/EmptyPlace";
 
 const MenuContainer = styled.div`
   position: static;
   z-index: 999;
   text-align: center;
+  /* text-align: right; */
 `;
 
 interface menuProps {
@@ -23,9 +25,7 @@ const Menu = ({ locationName, clickLocation }: menuProps) => {
       {locationName.current.length > 0 ? (
         <Location locationName={locationName} clickLocation={clickLocation} />
       ) : (
-        <Paper elevation={3} style={{ padding: "1vw" }}>
-          장소를 검색해주세요
-        </Paper>
+        <EmptyPlace />
       )}
     </MenuContainer>
   );
