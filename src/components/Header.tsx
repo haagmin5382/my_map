@@ -18,8 +18,7 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "./modal/SuccessModal";
 import AlertModal from "./modal/AlertModal";
-import { useLocation } from "react-router-dom";
-import { getPlace } from "redux/getLocation";
+
 const Header = () => {
   interface reduxStateType {
     modal: {
@@ -42,7 +41,6 @@ const Header = () => {
   }
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const userState = useSelector((state: userType) => state.user.value);
 
@@ -51,14 +49,7 @@ const Header = () => {
       openAndClose({ ...modalState, [modalName]: !modalState[modalName] })
     );
   };
-  if (location.pathname !== "/") {
-    // 지도를 벗어나면 검색기록을 초기화 한다.
-    dispatch(
-      getPlace({
-        location: [{ y: "", x: "" }],
-      })
-    );
-  }
+
   const clickLogOut = () => {
     authService.signOut();
     dispatch(

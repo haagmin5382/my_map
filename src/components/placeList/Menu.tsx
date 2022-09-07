@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Location from "./Location";
 import EmptyPlace from "../Loading/EmptyPlace";
@@ -21,9 +21,8 @@ const MenuContainer = styled.div<Props>`
   animation-fill-mode: forwards;
   @keyframes slide-left {
     0% {
-      width: 30vw;
+      display: none;
     }
-
     100% {
       width: 0vw;
       opacity: 0;
@@ -34,9 +33,7 @@ const MenuContainer = styled.div<Props>`
   @keyframes slide-right {
     from {
       width: 0vw;
-      opacity: 0;
     }
-
     to {
       width: 30vw;
     }
@@ -52,7 +49,9 @@ interface menuProps {
 
 const Menu = ({ locationName, clickLocation }: menuProps) => {
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-
+  const locationState = useSelector(
+    (state: reduxStateType) => state.location.value.location
+  );
   return (
     <MenuContainer menuModal={modalState.menuModal}>
       <Box sx={{ boxShadow: 10, height: "91.5vh" }}>

@@ -7,7 +7,6 @@ import Menu from "./placeList/Menu";
 import { FlexContainer } from "./Main";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
-// import { useLocation } from "react-router-dom";
 
 export interface locationInfo {
   y: number;
@@ -29,7 +28,7 @@ const Map = ({ locationName }: mapProps) => {
   const locationState = useSelector(
     (state: reduxStateType) => state.location.value.location
   );
-  // console.log(retrievingLocation);
+
   // console.log("locationState : ", locationState);
   const goWhereIam = async () => {
     await navigator.geolocation.getCurrentPosition((position) => {
@@ -77,7 +76,6 @@ const Map = ({ locationName }: mapProps) => {
       setRetrievingLocation(true); // else 부분 실행
     } else {
       // retrievingLocation가 true일 때 실행
-
       // 현재 위치 정보를 불러와야 지도를 그린다.
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
@@ -102,7 +100,7 @@ const Map = ({ locationName }: mapProps) => {
         marker.setMap(map);
       }
     }
-  }, [locationState]);
+  }, [locationState, retrievingLocation]);
 
   const clickLocation = (idx: number) => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
