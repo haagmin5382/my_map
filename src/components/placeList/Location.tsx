@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import LocationModal from "../modal/LocationModal";
+import { useSelector } from "react-redux";
+import { reduxStateType } from "components/Main";
 import PlaceButton from "./PlaceButton";
-const LocationContainer = styled.div`
+interface Props {
+  menuModal: boolean;
+}
+const LocationContainer = styled.div<Props>`
   height: 90vh;
   width: 30vw;
   overflow: auto;
   overflow-x: hidden;
   position: absolute;
   z-index: 999;
+  animation: ${(props) =>
+    props.menuModal ? "slide-right 1s" : "slide-left 1s"};
+  animation-fill-mode: forwards;
 `;
 
 interface LocationProps {
@@ -22,8 +30,9 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
     setLocationIndex(idx);
   };
   const [isClicked, setIsClicked] = useState(NaN);
+  const modalState = useSelector((state: reduxStateType) => state.modal.value);
   return (
-    <LocationContainer>
+    <LocationContainer menuModal={modalState.menuModal}>
       {locationName.current.map((el: string, idx: number) => {
         return (
           <div
