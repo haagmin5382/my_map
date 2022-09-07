@@ -7,6 +7,7 @@ import Menu from "./placeList/Menu";
 import { FlexContainer } from "./Main";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
+// import { useLocation } from "react-router-dom";
 
 export interface locationInfo {
   y: number;
@@ -97,6 +98,7 @@ const Map = ({ locationName }: mapProps) => {
             locationState[i].x
           ),
         });
+
         marker.setMap(map);
       }
     }
@@ -126,13 +128,8 @@ const Map = ({ locationName }: mapProps) => {
 
   return (
     <main>
-      {/* {modalState.successModal && <SuccessModal />} */}
-
-      <FlexContainer modalState={modalState.menuModal}>
-        {modalState.menuModal && (
-          <Menu locationName={locationName} clickLocation={clickLocation} />
-        )}
-
+      <FlexContainer>
+        <Menu locationName={locationName} clickLocation={clickLocation} />
         {retrievingLocation ? (
           <div>
             <SearchBar locationName={locationName} />

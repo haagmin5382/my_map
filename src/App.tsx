@@ -14,6 +14,7 @@ import Place from "pages/user/Place";
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       dispatch(

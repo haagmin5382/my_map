@@ -30,13 +30,8 @@ export interface reduxStateType {
   };
 }
 
-export interface ModalProps {
-  modalState: boolean;
-}
-
-export const FlexContainer = styled.div<ModalProps>`
+export const FlexContainer = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => (props.modalState ? "30% 70%" : "1fr")};
   transition: 0.5s;
 `;
 const Main = () => {

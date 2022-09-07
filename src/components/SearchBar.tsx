@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { getPlace } from "redux/getLocation";
 
-const SearchBarContainer = styled.div`
+interface Props {
+  menuModal: boolean;
+}
+const SearchBarContainer = styled.div<Props>`
   position: fixed;
   text-align: center;
   z-index: 9999;
-  left: 30vw;
+  left: ${(props) => (props.menuModal ? "50%" : "30%")};
   top: 10vh;
   > form {
     > input {
@@ -19,6 +22,7 @@ const SearchBarContainer = styled.div`
       border-radius: 20px;
     }
   }
+  transition: 1s;
 `;
 
 interface searchBarProps {
@@ -98,7 +102,7 @@ const SearchBar = ({ locationName }: searchBarProps) => {
     }
   };
   return (
-    <SearchBarContainer>
+    <SearchBarContainer menuModal={modalState.menuModal}>
       <form onSubmit={(e) => e.preventDefault()}>
         <input
           placeholder="장소 검색"
