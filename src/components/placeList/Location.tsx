@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import PlaceButton from "./PlaceButton";
 import styled from "styled-components";
-import LocationModal from "./modal/LocationModal";
-
+import LocationModal from "../modal/LocationModal";
+import PlaceButton from "./PlaceButton";
 const LocationContainer = styled.div`
   height: 90vh;
   width: 30vw;
@@ -22,6 +21,7 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
   const getIndexOfLocation = (idx: number) => {
     setLocationIndex(idx);
   };
+  const [isClicked, setIsClicked] = useState(NaN);
   return (
     <LocationContainer>
       {locationName.current.map((el: string, idx: number) => {
@@ -31,9 +31,10 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
             onClick={() => {
               clickLocation(idx);
               getIndexOfLocation(idx);
+              setIsClicked(idx);
             }}
           >
-            <PlaceButton place={el} />
+            <PlaceButton place={el} isClicked={isClicked === idx} />
           </div>
         );
       })}
