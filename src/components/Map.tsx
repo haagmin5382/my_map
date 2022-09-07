@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 import LoadingSpinner from "./Loading/LoadingSpinner";
 import { useSelector, useDispatch } from "react-redux";
 import { reduxStateType } from "./Main";
-import Menu from "./Menu";
+import Menu from "./placeList/Menu";
 import { FlexContainer } from "./Main";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
@@ -100,7 +100,7 @@ const Map = ({ locationName }: mapProps) => {
         marker.setMap(map);
       }
     }
-  });
+  }, [locationState]);
 
   const clickLocation = (idx: number) => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Location from "./Location";
-import EmptyPlace from "./Loading/EmptyPlace";
+import EmptyPlace from "../Loading/EmptyPlace";
 import Box from "@mui/material/Box";
 
 const MenuContainer = styled.div`

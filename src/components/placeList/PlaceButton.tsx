@@ -3,15 +3,21 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "./Main";
+import { reduxStateType } from "../Main";
 import { useNavigate } from "react-router-dom";
-const PlaceContainer = styled.div`
+
+interface Props {
+  isClicked: boolean;
+}
+const PlaceContainer = styled.div<Props>`
   display: flex;
   justify-content: space-between;
   padding: 1vw;
-  border-bottom: 1px solid white;
+  border-bottom: ${(props) =>
+    props.isClicked ? "1px solid #C2E7FE" : "1px solid white"};
   margin: 0.5vw;
-  color: white;
+  color: ${(props) => (props.isClicked ? "#026bab" : "white")};
+  background-color: ${(props) => (props.isClicked ? "white" : null)};
   font-weight: bold;
   cursor: pointer;
   @media screen and (max-width: 600px) {
@@ -21,17 +27,23 @@ const PlaceContainer = styled.div`
   }
   Button {
     font-size: 12px;
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 600px) {
       font-size: 8px;
     }
   }
 `;
 
-const PlaceButton = ({ place }: { place: string }) => {
+const PlaceButton = ({
+  place,
+  isClicked,
+}: {
+  place: string;
+  isClicked: boolean;
+}) => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const userState = useSelector((state: reduxStateType) => state.user.value);
-  console.log(useSelector((state) => state));
+
   const navigate = useNavigate();
   const clickSave = () => {
     if (userState.email) {
@@ -42,7 +54,7 @@ const PlaceButton = ({ place }: { place: string }) => {
   };
   return (
     <>
-      <PlaceContainer>
+      <PlaceContainer isClicked={isClicked}>
         <span>{place}</span>
         <Button
           sx={{
