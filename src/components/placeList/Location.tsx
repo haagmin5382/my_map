@@ -8,15 +8,17 @@ interface Props {
   menuModal: boolean;
 }
 const LocationContainer = styled.div<Props>`
+  display: ${(props) => (props.menuModal ? "block" : "none")};
   height: 90vh;
   width: 30vw;
   overflow: auto;
   overflow-x: hidden;
   position: absolute;
   z-index: 999;
-  animation: ${(props) =>
-    props.menuModal ? "slide-right 1s" : "slide-left 1s"};
+  animation: ${(props) => (props.menuModal ? "opacity 2s" : "noOpacity 1s")};
   animation-fill-mode: forwards;
+  /* animation: opacity 1s;
+  animation-fill-mode: forwards; */
 `;
 
 interface LocationProps {

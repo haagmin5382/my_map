@@ -24,56 +24,31 @@ const Map = ({ locationName }: mapProps) => {
 
   const [retrievingLocation, setRetrievingLocation] = useState(false);
   const dispatch = useDispatch();
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
   const locationState = useSelector(
     (state: reduxStateType) => state.location.value.location
   );
 
-  // console.log("locationState : ", locationState);
   const goWhereIam = async () => {
-    await navigator.geolocation.getCurrentPosition((position) => {
-      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-      let options = {
-        //지도를 생성할 때 필요한 기본 옵션
-
-        center: new kakao.maps.LatLng(
-          position.coords.latitude,
-          position.coords.longitude
-        ), //지도의 중심좌표.
-        // 현재 자신의 위치를 중심으로 한다.
-        level: 3, //지도의 레벨(확대, 축소 정도)
-      };
-
-      let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-      let marker = new kakao.maps.Marker({
-        // 지도 중심좌표에 마커를 생성합니다
-        position: new kakao.maps.LatLng(
-          position.coords.latitude,
-          position.coords.longitude
-        ),
-      });
-      marker.setMap(map);
-    });
+    setRetrievingLocation(false);
   };
 
   useEffect(() => {
+    console.log("useEffect!", retrievingLocation);
     if (!retrievingLocation) {
       // retrievingLocation가 false일 때 실행
+      // locationState.x , locationState.y가 없을 때 실행 (처음 사이트에 접속했을 때)
+      navigator.geolocation.getCurrentPosition((position) => {
+        dispatch(
+          getPlace({
+            location: [
+              { y: position.coords.latitude, x: position.coords.longitude },
+            ],
+          })
+        );
+        setRetrievingLocation(true); // else 부분 실행
+      });
 
-      if (!(locationState[0].y || locationState[0].x)) {
-        // locationState.x , locationState.y가 없을 때 실행 (처음 사이트에 접속했을 때)
-        navigator.geolocation.getCurrentPosition((position) => {
-          dispatch(
-            getPlace({
-              location: [
-                { y: position.coords.latitude, x: position.coords.longitude },
-              ],
-            })
-          );
-        });
-      }
-      setRetrievingLocation(true); // else 부분 실행
+      // setRetrievingLocation(true); // else 부분 실행
     } else {
       // retrievingLocation가 true일 때 실행
       // 현재 위치 정보를 불러와야 지도를 그린다.

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   isClicked: boolean;
+  menuModal: boolean;
 }
 const PlaceContainer = styled.div<Props>`
   display: flex;
@@ -31,6 +32,8 @@ const PlaceContainer = styled.div<Props>`
       font-size: 8px;
     }
   }
+  animation: ${(props) => (props.menuModal ? "opacity 2s" : "noOpacity 1s")};
+  animation-fill-mode: forwards;
 `;
 
 const PlaceButton = ({
@@ -54,7 +57,7 @@ const PlaceButton = ({
   };
   return (
     <>
-      <PlaceContainer isClicked={isClicked}>
+      <PlaceContainer isClicked={isClicked} menuModal={modalState.menuModal}>
         <span>{place}</span>
         <Button
           sx={{

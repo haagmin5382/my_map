@@ -9,6 +9,33 @@ interface Props {
 }
 const EmptyPlaceContainer = styled.div<Props>`
   display: ${(props) => (props.menuModal ? "inline-block" : "none")};
+  animation: opacity 1s;
+  animation-fill-mode: forwards;
+
+  @keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes noOpacity {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      width: 0;
+      display: none;
+    }
+  }
+  div {
+    animation: opacity 3.5s;
+    animation-fill-mode: forwards;
+  }
 `;
 
 const EmptyPlace = () => {
