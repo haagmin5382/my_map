@@ -10,17 +10,6 @@ import { openAndClose } from "redux/modal";
 import { reduxStateType } from "components/Main";
 import AlertModal from "components/modal/AlertModal";
 
-interface userType {
-  user: {
-    value: {
-      email: string;
-      displayName: string;
-      photoURL: string;
-      uid: string;
-    };
-  };
-}
-
 const ProfileContainer = styled.div`
   width: 30vw;
   margin: 0 auto;
@@ -46,7 +35,7 @@ const ProfileImg = styled.img`
 `;
 
 const Profile = () => {
-  const userProfile = useSelector((state: userType) => state.user.value);
+  const userProfile = useSelector((state: reduxStateType) => state.user.value);
   // console.log(userProfile);
 
   const [newDisplayName, setNewDisplayName] = useState(userProfile.displayName);

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { getPlace } from "redux/getLocation";
+import { reduxStateType } from "./Main";
 
 interface Props {
   menuModal: boolean;
@@ -28,24 +29,6 @@ const SearchBarContainer = styled.div<Props>`
 interface searchBarProps {
   locationName: {
     current: Array<string>;
-  };
-}
-
-interface locationCoordinate {
-  x: string;
-  y: string;
-}
-interface reduxStateType {
-  modal: {
-    value: {
-      menuModal: boolean;
-      alertModal: boolean;
-    };
-  };
-  location: {
-    value: {
-      location: Array<locationCoordinate>;
-    };
   };
 }
 

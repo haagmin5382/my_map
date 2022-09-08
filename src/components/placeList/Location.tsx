@@ -17,8 +17,6 @@ const LocationContainer = styled.div<Props>`
   z-index: 999;
   animation: ${(props) => (props.menuModal ? "opacity 2s" : "noOpacity 1s")};
   animation-fill-mode: forwards;
-  /* animation: opacity 1s;
-  animation-fill-mode: forwards; */
 `;
 
 interface LocationProps {

@@ -8,11 +8,6 @@ import { FlexContainer } from "./Main";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
 
-export interface locationInfo {
-  y: number;
-  x: number;
-}
-
 export interface mapProps {
   locationName: {
     current: Array<string>;

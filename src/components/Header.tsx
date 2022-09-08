@@ -18,31 +18,13 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "./modal/SuccessModal";
 import AlertModal from "./modal/AlertModal";
+import { reduxStateType } from "./Main";
 
 const Header = () => {
-  interface reduxStateType {
-    modal: {
-      value: {
-        menuModal: boolean;
-        alertModal: boolean;
-        successModal: string;
-      };
-    };
-  }
-  interface userType {
-    user: {
-      value: {
-        email: string;
-        displayName: string;
-        photoURL: string;
-        uid: string;
-      };
-    };
-  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const userState = useSelector((state: userType) => state.user.value);
+  const userState = useSelector((state: reduxStateType) => state.user.value);
 
   const controlModal = (modalName: keyof typeof modalState) => {
     dispatch(
