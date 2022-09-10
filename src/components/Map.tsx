@@ -24,26 +24,35 @@ const Map = ({ locationName }: mapProps) => {
   );
 
   const goWhereIam = async () => {
-    setRetrievingLocation(false);
+    setRetrievingLocation(false); // useEffect 실행
+    locationName.current = [`${new Date()}`];
   };
 
   useEffect(() => {
-    console.log("useEffect!", retrievingLocation);
     if (!retrievingLocation) {
       // retrievingLocation가 false일 때 실행
       // locationState.x , locationState.y가 없을 때 실행 (처음 사이트에 접속했을 때)
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(
-          getPlace({
-            location: [
-              { y: position.coords.latitude, x: position.coords.longitude },
-            ],
-          })
-        );
-        setRetrievingLocation(true); // else 부분 실행
-      });
-
-      // setRetrievingLocation(true); // else 부분 실행
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000,
+      };
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          dispatch(
+            getPlace({
+              location: [
+                { y: position.coords.latitude, x: position.coords.longitude },
+              ],
+            })
+          );
+          setRetrievingLocation(true); // else 부분 실행
+        },
+        () => {
+          alert("죄송합니다. 위치정보를 받아 올 수 없습니다.");
+        },
+        options
+      );
     } else {
       // retrievingLocation가 true일 때 실행
       // 현재 위치 정보를 불러와야 지도를 그린다.

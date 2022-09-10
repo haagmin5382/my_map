@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# my Map
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+과거에 갔던 장소를 다시 가보고 싶은데 그 곳이 어디었는지 기억나지 않으실 때가 있으셨을 것입니다. 그래서 이 웹사이트를 만들게 되었습니다.
 
 ## Available Scripts
 
