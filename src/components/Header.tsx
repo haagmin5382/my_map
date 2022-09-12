@@ -47,6 +47,13 @@ const Header = () => {
     if (userState.email) {
       await clickLogOut();
       navigate("/");
+      dispatch(
+        openAndClose({
+          ...modalState,
+          alertModal: null,
+          successModal: "로그아웃 했습니다.",
+        })
+      );
     } else {
       navigate("/login");
     }
@@ -64,7 +71,7 @@ const Header = () => {
   return (
     <header>
       {modalState.successModal && <SuccessModal />}
-      {modalState.alertModal && <AlertModal />}
+
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ height: "8vh" }}>
           <Toolbar>

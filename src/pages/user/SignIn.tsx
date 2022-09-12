@@ -156,11 +156,6 @@ const SignIn = () => {
               <GoogleIcon style={{ marginRight: "1vw" }} /> Google 로그인
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  비밀번호 찾기
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
                   회원가입
