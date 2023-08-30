@@ -17,14 +17,17 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "./modal/SuccessModal";
-import AlertModal from "./modal/AlertModal";
-import { reduxStateType } from "./Main";
+import { reduxType } from "Type";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const userState = useSelector((state: reduxStateType) => state.user.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
+  const userState = useSelector(
+    (state: reduxType.reduxStateType) => state.user.value
+  );
 
   const controlModal = (modalName: keyof typeof modalState) => {
     dispatch(

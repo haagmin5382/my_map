@@ -2,7 +2,7 @@ import React from "react";
 import FmdBadTwoToneIcon from "@mui/icons-material/FmdBadTwoTone";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { reduxStateType } from "components/Main";
+import { reduxType } from "Type";
 
 interface Props {
   menuModal: boolean;
@@ -39,7 +39,9 @@ const EmptyPlaceContainer = styled.div<Props>`
 `;
 
 const EmptyPlace = () => {
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   return (
     <EmptyPlaceContainer menuModal={modalState.menuModal}>
       <FmdBadTwoToneIcon

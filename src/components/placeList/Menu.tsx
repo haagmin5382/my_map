@@ -4,7 +4,7 @@ import Location from "./Location";
 import EmptyPlace from "../Loading/EmptyPlace";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
-import { reduxStateType } from "components/Main";
+import { reduxType } from "Type";
 
 interface Props {
   menuModal: boolean;
@@ -52,7 +52,9 @@ interface menuProps {
 }
 
 const Menu = ({ locationName, clickLocation }: menuProps) => {
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   const [isRendered, setIsRendered] = useState(false);
   useEffect(() => {
     if (modalState.menuModal) {

@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "components/Main";
+import { reduxType } from "Type";
 
 export const AlertModalConatiner = styled.div`
   position: "fixed";
@@ -26,7 +26,9 @@ export const AlertModalConatiner = styled.div`
 `;
 
 const AlertModal = () => {
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

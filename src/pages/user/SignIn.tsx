@@ -13,19 +13,21 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
 import AlertModal from "components/modal/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
-import { reduxStateType } from "components/Main";
 import { openAndClose } from "redux/modal";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { authService } from "fbase";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { reduxType } from "Type";
 
 const theme = createTheme();
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   const [user, setUser] = useState({ email: "", password: "" });
 
   const fillInput = (e: React.ChangeEvent<HTMLInputElement>) => {

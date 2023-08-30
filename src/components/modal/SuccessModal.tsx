@@ -4,9 +4,11 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "components/Main";
+import { reduxType } from "Type";
 const SuccessModal = () => {
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

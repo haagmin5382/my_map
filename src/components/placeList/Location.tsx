@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import LocationModal from "../modal/LocationModal";
 import { useSelector } from "react-redux";
-import { reduxStateType } from "components/Main";
 import PlaceButton from "./PlaceButton";
+import { reduxType } from "Type";
 interface Props {
   menuModal: boolean;
 }
@@ -30,7 +30,9 @@ const Location = ({ locationName, clickLocation }: LocationProps) => {
     setLocationIndex(idx);
   };
   const [isClicked, setIsClicked] = useState(NaN);
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
   return (
     <LocationContainer menuModal={modalState.menuModal}>
       {locationName.current.map((el: string, idx: number) => {

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import LoadingSpinner from "./Loading/LoadingSpinner";
 import { useSelector, useDispatch } from "react-redux";
-import { reduxStateType } from "./Main";
 import Menu from "./placeList/Menu";
 import { FlexContainer } from "./Main";
 import Button from "@mui/material/Button";
 import { getPlace } from "redux/getLocation";
+import { reduxType } from "Type";
 
 export interface mapProps {
   locationName: {
@@ -20,7 +20,7 @@ const Map = ({ locationName }: mapProps) => {
   const [retrievingLocation, setRetrievingLocation] = useState(false);
   const dispatch = useDispatch();
   const locationState = useSelector(
-    (state: reduxStateType) => state.location.value.location
+    (state: reduxType.reduxStateType) => state.location.value.location
   );
 
   const goWhereIam = async () => {

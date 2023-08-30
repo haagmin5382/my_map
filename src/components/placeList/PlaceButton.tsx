@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "../Main";
 import { useNavigate } from "react-router-dom";
+import { reduxType } from "Type";
 
 interface Props {
   isClicked: boolean;
@@ -44,8 +44,12 @@ const PlaceButton = ({
   isClicked: boolean;
 }) => {
   const dispatch = useDispatch();
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const userState = useSelector((state: reduxStateType) => state.user.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
+  const userState = useSelector(
+    (state: reduxType.reduxStateType) => state.user.value
+  );
 
   const navigate = useNavigate();
   const clickSave = () => {

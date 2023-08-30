@@ -7,8 +7,8 @@ import { authService } from "fbase";
 import { updateProfile } from "firebase/auth";
 import { userReducer } from "redux/user";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "components/Main";
 import AlertModal from "components/modal/AlertModal";
+import { reduxType } from "Type";
 
 const ProfileContainer = styled.div`
   width: 30vw;
@@ -35,7 +35,9 @@ const ProfileImg = styled.img`
 `;
 
 const Profile = () => {
-  const userProfile = useSelector((state: reduxStateType) => state.user.value);
+  const userProfile = useSelector(
+    (state: reduxType.reduxStateType) => state.user.value
+  );
   // console.log(userProfile);
 
   const [newDisplayName, setNewDisplayName] = useState(userProfile.displayName);
@@ -61,7 +63,9 @@ const Profile = () => {
       })
     );
   };
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
 
   const editProfile = async () => {
     if (newDisplayName && authService.currentUser !== null) {

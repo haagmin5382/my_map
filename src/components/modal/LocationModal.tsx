@@ -6,12 +6,12 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
-import { reduxStateType } from "components/Main";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService } from "fbase";
+import { reduxType } from "Type";
 
 const detectMobileDevice = (agent: string) => {
   const mobileRegex = [
@@ -47,11 +47,15 @@ export default function LocationModal({
   location: string;
   locationIndex: number;
 }) {
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
-  const locationState = useSelector(
-    (state: reduxStateType) => state.location.value
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
   );
-  const userState = useSelector((state: reduxStateType) => state.user.value);
+  const locationState = useSelector(
+    (state: reduxType.reduxStateType) => state.location.value
+  );
+  const userState = useSelector(
+    (state: reduxType.reduxStateType) => state.user.value
+  );
 
   const dispatch = useDispatch();
   const handleClose = () => {

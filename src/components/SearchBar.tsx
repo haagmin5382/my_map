@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openAndClose } from "redux/modal";
 import { getPlace } from "redux/getLocation";
-import { reduxStateType } from "./Main";
+import { reduxType } from "Type";
 
 interface Props {
   menuModal: boolean;
@@ -40,7 +40,9 @@ const SearchBar = ({ locationName }: searchBarProps) => {
 
   const dispatch = useDispatch();
 
-  const modalState = useSelector((state: reduxStateType) => state.modal.value);
+  const modalState = useSelector(
+    (state: reduxType.reduxStateType) => state.modal.value
+  );
 
   const openMenuModal = () => {
     dispatch(openAndClose({ ...modalState, menuModal: true }));
